@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block page %}edit_product{% endblock %}
+{% block body_extra %}data-product-id="{{ product_id|escape }}"{% endblock %}
+{% block content %}
+<div style="max-width:700px;margin:0 auto;padding:28px 16px">
+  <a href="/product/{{ product_id }}/" style="color:var(--primary);text-decoration:none;font-size:14px">← Бозгашт</a>
+  <h1 style="margin:16px 0 24px;font-size:22px;font-weight:800;color:var(--text)">✏️ Таҳрири эълон</h1>
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:24px">
+    <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px">Title</label>
+    <input id="ed-title" style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);margin-bottom:14px;box-sizing:border-box;background:var(--bg);color:var(--text)">
+    <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px">Description</label>
+    <textarea id="ed-desc" style="width:100%;min-height:100px;padding:11px 14px;border-radius:10px;border:1px solid var(--border);margin-bottom:14px;box-sizing:border-box;background:var(--bg);color:var(--text)"></textarea>
+    <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px">Price</label>
+    <input id="ed-price" type="text" style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);margin-bottom:14px;box-sizing:border-box;background:var(--bg);color:var(--text)">
+    <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px">Category</label>
+    <select id="ed-category" style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);margin-bottom:14px;background:var(--bg2);color:var(--text)"></select>
+    <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px">Location</label>
+    <select id="ed-location" style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);margin-bottom:14px;background:var(--bg2);color:var(--text)"></select>
+    <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px">Add images</label>
+    <input id="ed-files" type="file" multiple accept="image/*">
+    <button type="button" id="ed-submit" style="margin-top:20px;width:100%;padding:14px;border-radius:12px;border:none;background:var(--primary);color:#fff;font-weight:700;cursor:pointer">💾 Нигоҳ доштан</button>
+  </div>
+</div>
+{% endblock %}

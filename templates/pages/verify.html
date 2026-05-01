@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block page %}verify{% endblock %}
+{% block content %}
+<div style="min-height:calc(100vh - 60px);display:flex;align-items:center;justify-content:center;background:var(--bg);padding:24px">
+  <div style="background:var(--bg2);border-radius:16px;padding:40px;width:100%;max-width:400px;box-shadow:var(--card-shadow);border:1px solid var(--border)">
+    <div style="text-align:center;margin-bottom:24px">
+      <span style="font-size:48px">📧</span>
+      <h1 style="margin:8px 0 4px;font-size:22px;font-weight:700" data-i18n="auth.verifyTitle">Verify</h1>
+      <p style="color:var(--text2);font-size:14px;margin:0"><span data-i18n="auth.verifyDesc">Code sent to</span> <strong id="verify-email-display"></strong></p>
+    </div>
+    <div id="verify-error" style="display:none;background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:10px 14px;color:#dc2626;font-size:14px;margin-bottom:16px"></div>
+    <div id="verify-resent" style="display:none;background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:10px 14px;color:#16a34a;font-size:14px;margin-bottom:16px">✅ Code resent!</div>
+    <label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px" data-i18n="auth.code">Code</label>
+    <input id="verify-code" maxlength="6" style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);font-size:28px;letter-spacing:0.4em;font-weight:700;text-align:center;margin-bottom:16px;outline:none;box-sizing:border-box;background:var(--bg);color:var(--text)" placeholder="000000">
+    <button type="button" id="verify-submit" style="width:100%;padding:13px;border-radius:10px;border:none;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer">Verify</button>
+    <p style="text-align:center;margin-top:16px;font-size:13px;color:var(--text2)">
+      <button type="button" id="verify-resend" style="background:none;border:none;color:var(--primary);cursor:pointer;font-size:13px">Resend</button>
+    </p>
+  </div>
+</div>
+{% endblock %}

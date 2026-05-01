@@ -1,0 +1,98 @@
+{
+  "nav": {
+    "home": "Home",
+    "sell": "Sell",
+    "login": "Login",
+    "register": "Register",
+    "profile": "Profile",
+    "logout": "Logout",
+    "myListings": "My Listings"
+  },
+  "home": {
+    "title": "Find anything, sell anything",
+    "search": "Search products...",
+    "filters": "Filters",
+    "sort": "Sort",
+    "sortNewest": "Newest",
+    "sortPopular": "Most viewed",
+    "sortPriceAsc": "Price: Low to High",
+    "sortPriceDesc": "Price: High to Low",
+    "minPrice": "Min price",
+    "maxPrice": "Max price",
+    "location": "Location",
+    "allCategories": "All Categories",
+    "noProducts": "No products found",
+    "loadMore": "Load more"
+  },
+  "product": {
+    "views": "views",
+    "likes": "likes",
+    "postedBy": "Posted by",
+    "contact": "Contact seller",
+    "whatsapp": "WhatsApp",
+    "like": "Like",
+    "unlike": "Unlike",
+    "edit": "Edit",
+    "delete": "Delete",
+    "deleteConfirm": "Are you sure you want to delete this listing?",
+    "share": "Share"
+  },
+  "ai": {
+    "title": "Ask AI about this product",
+    "placeholder": "Ask about price, condition, alternatives...",
+    "send": "Send",
+    "clear": "Clear history",
+    "thinking": "AI is thinking...",
+    "suggestions": {
+      "price": "Is this price fair?",
+      "compare": "Compare with alternatives",
+      "recommend": "Should I buy this?",
+      "condition": "What should I check before buying?"
+    }
+  },
+  "auth": {
+    "email": "Email address",
+    "password": "Password",
+    "fullName": "Full name",
+    "loginTitle": "Welcome back",
+    "registerTitle": "Create account",
+    "verifyTitle": "Verify your email",
+    "verifyDesc": "Enter the 6-digit code sent to",
+    "forgotPassword": "Forgot password?",
+    "noAccount": "Don't have an account?",
+    "haveAccount": "Already have an account?",
+    "sendCode": "Send reset code",
+    "newPassword": "New password",
+    "code": "Verification code",
+    "resend": "Resend code"
+  },
+  "create": {
+    "title": "Create listing",
+    "productTitle": "Title",
+    "description": "Description",
+    "price": "Price",
+    "category": "Category",
+    "location": "Location",
+    "images": "Photos",
+    "addImages": "Add photos",
+    "submit": "Publish listing",
+    "success": "Listing published!"
+  },
+  "profile": {
+    "title": "My Profile",
+    "editProfile": "Edit profile",
+    "myListings": "My listings",
+    "deactivate": "Deactivate account",
+    "deactivateConfirm": "Deactivating will hide all your listings. Continue?",
+    "delete": "Delete account",
+    "deleteConfirm": "This is permanent. Are you sure?"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "save": "Save",
+    "cancel": "Cancel",
+    "back": "Back",
+    "currency": "TJS"
+  }
+}

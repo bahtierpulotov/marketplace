@@ -1,0 +1,98 @@
+{
+  "nav": {
+    "home": "Bosh sahifa",
+    "sell": "Sotish",
+    "login": "Kirish",
+    "register": "Ro'yxatdan o'tish",
+    "profile": "Profil",
+    "logout": "Chiqish",
+    "myListings": "Mening e'lonlarim"
+  },
+  "home": {
+    "title": "Hamma narsani top, hamma narsani sot",
+    "search": "Mahsulot qidirish...",
+    "filters": "Filtrlar",
+    "sort": "Tartiblash",
+    "sortNewest": "Yangi",
+    "sortPopular": "Mashhur",
+    "sortPriceAsc": "Narx: arzondan qimmatga",
+    "sortPriceDesc": "Narx: qimmatdan arzonga",
+    "minPrice": "Min narx",
+    "maxPrice": "Max narx",
+    "location": "Joylashuv",
+    "allCategories": "Barcha kategoriyalar",
+    "noProducts": "Mahsulot topilmadi",
+    "loadMore": "Ko'proq yuklash"
+  },
+  "product": {
+    "views": "ko'rishlar",
+    "likes": "yoqtirishlar",
+    "postedBy": "Sotuvchi",
+    "contact": "Sotuvchi bilan bog'lanish",
+    "whatsapp": "WhatsApp",
+    "like": "Yoqtirish",
+    "unlike": "Yoqtirmaslik",
+    "edit": "Tahrirlash",
+    "delete": "O'chirish",
+    "deleteConfirm": "Ushbu e'lonni o'chirishni xohlaysizmi?",
+    "share": "Ulashish"
+  },
+  "ai": {
+    "title": "Ushbu mahsulot haqida AIdan so'rang",
+    "placeholder": "Narx, holat, muqobillar haqida so'rang...",
+    "send": "Yuborish",
+    "clear": "Tarixni tozalash",
+    "thinking": "AI o'ylayapti...",
+    "suggestions": {
+      "price": "Narx adolatli mi?",
+      "compare": "Muqobillar bilan solishtirish",
+      "recommend": "Sotib olishim kerakmi?",
+      "condition": "Sotib olishdan oldin nima tekshirish kerak?"
+    }
+  },
+  "auth": {
+    "email": "Elektron pochta",
+    "password": "Parol",
+    "fullName": "To'liq ism",
+    "loginTitle": "Xush kelibsiz",
+    "registerTitle": "Hisob yaratish",
+    "verifyTitle": "Elektron pochtangizni tasdiqlang",
+    "verifyDesc": "Yuborilgan 6 xonali kodni kiriting",
+    "forgotPassword": "Parolni unutdingizmi?",
+    "noAccount": "Hisobingiz yo'qmi?",
+    "haveAccount": "Hisobingiz bormi?",
+    "sendCode": "Kod yuborish",
+    "newPassword": "Yangi parol",
+    "code": "Tasdiqlash kodi",
+    "resend": "Qayta yuborish"
+  },
+  "create": {
+    "title": "E'lon yaratish",
+    "productTitle": "Sarlavha",
+    "description": "Tavsif",
+    "price": "Narx",
+    "category": "Kategoriya",
+    "location": "Joylashuv",
+    "images": "Rasmlar",
+    "addImages": "Rasm qo'shish",
+    "submit": "Nashr qilish",
+    "success": "E'lon nashr qilindi!"
+  },
+  "profile": {
+    "title": "Mening profilim",
+    "editProfile": "Profilni tahrirlash",
+    "myListings": "Mening e'lonlarim",
+    "deactivate": "Hisobni o'chirish",
+    "deactivateConfirm": "Barcha e'lonlaringiz yashiriladi. Davom etasizmi?",
+    "delete": "Hisobni o'chirib tashlash",
+    "deleteConfirm": "Bu qaytarib bo'lmaydi. Ishonchingiz komilmi?"
+  },
+  "common": {
+    "loading": "Yuklanmoqda...",
+    "error": "Xatolik yuz berdi",
+    "save": "Saqlash",
+    "cancel": "Bekor qilish",
+    "back": "Orqaga",
+    "currency": "UZS"
+  }
+}

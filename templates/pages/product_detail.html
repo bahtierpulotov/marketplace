@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block page %}product_detail{% endblock %}
+{% block body_extra %}data-product-id="{{ product_id|escape }}"{% endblock %}
+{% block content %}
+<div id="pd-root" style="min-height:40vh"></div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block page %}create_product{% endblock %}
+{% block content %}
+<div style="max-width:700px;margin:0 auto;padding:28px 16px">
+  <h1 style="margin:0 0 24px;font-size:24px;font-weight:800;color:var(--text)">🛍️ <span data-i18n="create.title">Create</span></h1>
+  <div id="cr-error" style="display:none;background:#fef2f2;border:1px solid #fca5a5;border-radius:10px;padding:12px 16px;color:#dc2626;font-size:14px;margin-bottom:20px"></div>
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px">
+    <label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px" data-i18n="create.productTitle">Title *</label>
+    <input id="cr-title" style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);font-size:15px;margin-bottom:16px;outline:none;box-sizing:border-box;background:var(--bg);color:var(--text)">
+    <label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px" data-i18n="create.description">Description *</label>
+    <textarea id="cr-desc" style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);font-size:15px;margin-bottom:16px;min-height:110px;resize:vertical;outline:none;box-sizing:border-box;background:var(--bg);color:var(--text)"></textarea>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+      <div>
+        <label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px"><span data-i18n="create.price">Price</span> *</label>
+        <input id="cr-price" type="number" min="0" style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);font-size:15px;outline:none;box-sizing:border-box;background:var(--bg);color:var(--text)">
+      </div>
+      <div>
+        <label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px" data-i18n="create.location">Location</label>
+        <select id="cr-location" style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);font-size:15px;background:var(--bg2);color:var(--text)"></select>
+      </div>
+    </div>
+    <label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px;margin-top:8px" data-i18n="create.category">Category</label>
+    <select id="cr-category" style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);font-size:15px;background:var(--bg2);color:var(--text)"></select>
+    <label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px;margin-top:12px">Images</label>
+    <input id="cr-files" type="file" multiple accept="image/*" style="margin-bottom:16px">
+  </div>
+  <button type="button" id="cr-submit" style="width:100%;padding:14px;border-radius:12px;border:none;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer" data-i18n="common.save">Publish</button>
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block page %}public_profile{% endblock %}
+{% block body_extra %}data-public-user-id="{{ public_user_id|escape }}"{% endblock %}
+{% block content %}
+<div id="pub-root" style="max-width:960px;margin:0 auto;padding:28px 16px">
+  <div style="background:linear-gradient(135deg,#6366f1 0%,#8b5cf6 100%);border-radius:20px;padding:32px 28px;margin-bottom:28px;position:relative;overflow:hidden">
+    <div style="display:flex;align-items:center;gap:20px;position:relative">
+      <div id="pub-avatar" style="width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,0.25);border:3px solid rgba(255,255,255,0.5);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:#fff;overflow:hidden"></div>
+      <div style="flex:1">
+        <h1 id="pub-name" style="margin:0 0 6px;font-size:22px;font-weight:800;color:#fff">…</h1>
+        <p id="pub-email" style="margin:0;color:rgba(255,255,255,0.8);font-size:14px">…</p>
+      </div>
+      <div style="background:rgba(255,255,255,0.15);border-radius:14px;padding:14px 20px;text-align:center;border:1px solid rgba(255,255,255,0.2)">
+        <p id="pub-count" style="margin:0;font-size:26px;font-weight:800;color:#fff">0</p>
+        <p style="margin:4px 0 0;font-size:12px;color:rgba(255,255,255,0.75)">Эълонҳо</p>
+      </div>
+    </div>
+  </div>
+  <h2 style="margin:0 0 16px;font-size:18px;font-weight:700">Эълонҳо</h2>
+  <div id="pub-products"></div>
+</div>
+{% endblock %}

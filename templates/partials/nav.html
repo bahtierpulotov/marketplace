@@ -1,0 +1,80 @@
+{% load static %}
+<nav
+  style="background:var(--bg2);border-bottom:1px solid var(--border);padding:0 20px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;box-shadow:var(--card-shadow)">
+  <a href="/" style="text-decoration:none">
+    <span style="font-size:20px;font-weight:800;color:var(--primary)">🛍️ Bozor</span>
+  </a>
+  <div class="desktop-nav" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <div style="display:flex;gap:4px;align-items:center">
+      <button type="button" data-lang="ru"
+        style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:4px 8px;font-size:12px;cursor:pointer;color:var(--text)">RU</button>
+      <button type="button" data-lang="tj"
+        style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:4px 8px;font-size:12px;cursor:pointer;color:var(--text)">TJ</button>
+      <button type="button" data-lang="en"
+        style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:4px 8px;font-size:12px;cursor:pointer;color:var(--text)">EN</button>
+      <button type="button" data-lang="uz"
+        style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:4px 8px;font-size:12px;cursor:pointer;color:var(--text)">UZ</button>
+    </div>
+    <button type="button" id="theme-toggle" title="Dark / Light mode"
+      style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:6px 10px;font-size:16px;cursor:pointer;color:var(--text)">
+      <span id="theme-toggle-icon">🌙</span>
+    </button>
+    <div id="nav-guest" style="display:flex;gap:8px;align-items:center">
+      <a href="/login/"
+        style="background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:7px 14px;font-size:14px;font-weight:500;text-decoration:none;display:inline-block"
+        data-i18n="nav.login">Login</a>
+      <a href="/register/"
+        style="background:var(--primary);color:#fff;border:1px solid var(--border);border-radius:8px;padding:7px 14px;font-size:14px;font-weight:500;text-decoration:none;display:inline-block"
+        data-i18n="nav.register">Register</a>
+    </div>
+    <div id="nav-user" style="display:none;gap:8px;align-items:center">
+      <a href="/create/"
+        style="background:var(--primary);color:#fff;border:1px solid var(--border);border-radius:8px;padding:7px 14px;font-size:14px;font-weight:500;text-decoration:none;display:inline-block">+
+        <span data-i18n="nav.sell">Sell</span></a>
+      <a href="/profile/" id="nav-user-label"
+        style="background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:7px 14px;font-size:14px;font-weight:500;text-decoration:none;display:inline-block">👤
+        Profile</a>
+      <button type="button" id="nav-logout"
+        style="background:var(--bg3);color:var(--text2);border:1px solid var(--border);border-radius:8px;padding:7px 14px;font-size:14px;font-weight:500;cursor:pointer"
+        data-i18n="nav.logout">Logout</button>
+    </div>
+  </div>
+  <button type="button" class="hamburger" id="nav-hamburger"
+    style="background:none;border:none;font-size:24px;cursor:pointer;color:var(--text)">☰</button>
+</nav>
+<div id="nav-mobile-menu"
+  style="display:none;position:fixed;top:60px;left:0;right:0;background:var(--bg2);border-bottom:1px solid var(--border);padding:16px 20px;flex-direction:column;gap:10px;z-index:199;box-shadow:var(--card-shadow)">
+  <div style="display:flex;gap:4px;flex-wrap:wrap">
+    <button type="button" data-lang="ru"
+      style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:6px 10px;font-size:12px;cursor:pointer">RU</button>
+    <button type="button" data-lang="tj"
+      style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:6px 10px;font-size:12px;cursor:pointer">TJ</button>
+    <button type="button" data-lang="en"
+      style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:6px 10px;font-size:12px;cursor:pointer">EN</button>
+    <button type="button" data-lang="uz"
+      style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:6px 10px;font-size:12px;cursor:pointer">UZ</button>
+  </div>
+  <button type="button" id="theme-toggle-mobile"
+    style="background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:7px 14px;font-size:14px;cursor:pointer;text-align:left;width:100%">
+    <span id="theme-toggle-icon-mobile">🌙 Dark mode</span>
+  </button>
+  <div id="nav-guest-mobile" style="display:flex;flex-direction:column;gap:10px">
+    <a href="/login/"
+      style="background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:7px 14px;text-decoration:none;text-align:center"
+      data-i18n="nav.login">Login</a>
+    <a href="/register/"
+      style="background:var(--primary);color:#fff;border:1px solid var(--border);border-radius:8px;padding:7px 14px;text-decoration:none;text-align:center"
+      data-i18n="nav.register">Register</a>
+  </div>
+  <div id="nav-user-mobile" style="display:none;flex-direction:column;gap:10px">
+    <a href="/create/"
+      style="background:var(--primary);color:#fff;border:1px solid var(--border);border-radius:8px;padding:7px 14px;text-decoration:none;text-align:center">+
+      <span data-i18n="nav.sell">Sell</span></a>
+    <a href="/profile/"
+      style="background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:7px 14px;text-decoration:none;text-align:center"
+      id="nav-user-label-mobile" data-i18n="nav.profile">Profile</a>
+    <button type="button" id="nav-logout-mobile"
+      style="background:var(--bg3);color:var(--text2);border:1px solid var(--border);border-radius:8px;padding:7px 14px;cursor:pointer"
+      data-i18n="nav.logout">Logout</button>
+  </div>
+</div>

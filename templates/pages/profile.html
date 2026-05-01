@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block page %}profile{% endblock %}
+{% block content %}
+<template id="profile-empty-template">
+  <div style="text-align:center;padding:60px 20px;background:var(--bg2);border-radius:16px;border:2px dashed var(--border)">
+    <p style="font-size:52px;margin:0 0 12px">📭</p>
+    <p style="color:var(--text2);font-size:16px;margin:0 0 20px">Шумо ҳанӯз эълон нагузоштед</p>
+    <a href="/create/" style="background:var(--primary);color:#fff;padding:11px 28px;border-radius:10px;text-decoration:none;font-weight:600;font-size:15px">+ Эълон</a>
+  </div>
+</template>
+<div style="max-width:960px;margin:0 auto;padding:28px 16px">
+  <div style="background:linear-gradient(135deg,#6366f1 0%,#8b5cf6 100%);border-radius:20px;padding:32px 28px;margin-bottom:24px;position:relative;overflow:hidden">
+    <div style="position:absolute;top:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,0.07)"></div>
+    <div style="display:flex;align-items:center;gap:20px;position:relative">
+      <div id="pf-avatar" style="width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,0.25);border:3px solid rgba(255,255,255,0.5);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:#fff;flex-shrink:0;overflow:hidden"></div>
+      <div style="flex:1">
+        <h1 id="pf-name" style="margin:0 0 4px;font-size:22px;font-weight:800;color:#fff">…</h1>
+        <p id="pf-email" style="margin:0 0 4px;color:rgba(255,255,255,0.75);font-size:14px">…</p>
+        <p id="pf-phone-row" style="margin:0 0 4px;color:rgba(255,255,255,0.75);font-size:14px;display:none"><span id="pf-phone"></span></p>
+        <p id="pf-date" style="margin:0;color:rgba(255,255,255,0.5);font-size:12px"></p>
+      </div>
+      <div style="background:rgba(255,255,255,0.15);border-radius:14px;padding:14px 20px;text-align:center;border:1px solid rgba(255,255,255,0.2)">
+        <p id="pf-count" style="margin:0;font-size:28px;font-weight:800;color:#fff">0</p>
+        <p style="margin:2px 0 0;font-size:12px;color:rgba(255,255,255,0.7);font-weight:500" data-i18n="profile.myListings">Listings</p>
+      </div>
+    </div>
+  </div>
+  <div style="display:flex;gap:6px;margin-bottom:24px;background:var(--bg3);border-radius:14px;padding:5px;border:1px solid var(--border)">
+    <button type="button" id="tab-listings" style="flex:1;padding:10px 16px;border-radius:10px;border:none;background:var(--bg2);color:var(--primary);font-weight:700;font-size:14px;cursor:pointer">📦 <span data-i18n="profile.myListings">Listings</span></button>
+    <button type="button" id="tab-edit" style="flex:1;padding:10px 16px;border-radius:10px;border:none;background:transparent;color:var(--text2);font-weight:500;font-size:14px;cursor:pointer">✏️ <span data-i18n="profile.editProfile">Edit</span></button>
+    <button type="button" id="tab-settings" style="flex:1;padding:10px 16px;border-radius:10px;border:none;background:transparent;color:var(--text2);font-weight:500;font-size:14px;cursor:pointer">⚙️ Settings</button>
+  </div>
+  <div id="profile-pane-listings">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <h2 style="margin:0;font-size:18px;font-weight:700;color:var(--text)">📦 <span data-i18n="profile.myListings">Listings</span></h2>
+      <a href="/create/" style="background:var(--primary);color:#fff;padding:9px 20px;border-radius:10px;text-decoration:none;font-size:14px;font-weight:600">＋ Nav</a>
+    </div>
+    <div id="profile-products"></div>
+  </div>
+  <div id="profile-pane-edit" style="display:none">
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:24px">
+      <h2 style="margin:0 0 24px;font-size:18px;font-weight:700;color:var(--text)">✏️ <span data-i18n="profile.editProfile">Edit</span></h2>
+      <div id="edit-msg" style="display:none;border-radius:10px;padding:12px 16px;font-size:14px;margin-bottom:18px;font-weight:500"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div>
+          <label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:7px" data-i18n="auth.fullName">Name</label>
+          <input id="edit-fullname" style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);font-size:15px;margin-bottom:16px;outline:none;box-sizing:border-box;background:var(--bg);color:var(--text)">
+        </div>
+        <div>
+          <label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:7px">📞 Phone</label>
+          <input id="edit-phone" type="tel" style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);font-size:15px;margin-bottom:16px;outline:none;box-sizing:border-box;background:var(--bg);color:var(--text)">
+        </div>
+      </div>
+      <label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:7px">Email</label>
+      <input id="edit-email" disabled style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);font-size:15px;margin-bottom:16px;opacity:0.5;cursor:not-allowed;box-sizing:border-box;background:var(--bg);color:var(--text)">
+      <button type="button" id="edit-save" style="padding:12px 32px;border-radius:10px;border:none;background:var(--primary);color:#fff;font-size:15px;font-weight:700;cursor:pointer">💾 <span data-i18n="common.save">Save</span></button>
+    </div>
+  </div>
+  <div id="profile-pane-settings" style="display:none">
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:16px">
+      <h3 style="margin:0 0 14px;font-size:16px;font-weight:700">⏸ Deactivate</h3>
+      <p style="margin:0 0 14px;font-size:14px;color:var(--text2)">Ҳамаи эълонҳо пинҳон мешаванд.</p>
+      <button type="button" id="pf-deactivate" style="padding:9px 20px;border-radius:9px;border:1px solid #fbbf24;background:#fffbeb;color:#92400e;font-weight:600;cursor:pointer;font-size:14px">⏸ <span data-i18n="profile.deactivate">Deactivate</span></button>
+    </div>
+    <div style="background:var(--bg2);border:1px solid #fecaca;border-radius:16px;padding:24px">
+      <h3 style="margin:0 0 14px;font-size:16px;font-weight:700;color:#dc2626">🗑 Delete</h3>
+      <p style="margin:0 0 14px;font-size:14px;color:var(--text2)">Ин амал бебозгашт аст.</p>
+      <button type="button" id="pf-delete" style="padding:9px 20px;border-radius:9px;border:1px solid #fca5a5;background:#fef2f2;color:#dc2626;font-weight:600;cursor:pointer;font-size:14px">🗑 <span data-i18n="profile.delete">Delete</span></button>
+    </div>
+  </div>
+</div>
+{% endblock %}

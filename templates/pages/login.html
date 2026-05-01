@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block page %}login{% endblock %}
+{% block content %}
+<div style="min-height:calc(100vh - 60px);display:flex;align-items:center;justify-content:center;background:var(--bg);padding:24px">
+  <div style="background:var(--bg2);border-radius:16px;padding:40px;width:100%;max-width:400px;box-shadow:var(--card-shadow);border:1px solid var(--border)">
+    <div style="text-align:center;margin-bottom:28px">
+      <span style="font-size:40px">🛍️</span>
+      <h1 style="margin:8px 0 4px;font-size:24px;font-weight:700" data-i18n="auth.loginTitle">Login</h1>
+    </div>
+    <div id="login-error" style="display:none;background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:10px 14px;color:#dc2626;font-size:14px;margin-bottom:16px"></div>
+    <label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px" data-i18n="auth.email">Email</label>
+    <input id="login-email" type="email" style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);font-size:15px;margin-bottom:16px;outline:none;box-sizing:border-box;background:var(--bg);color:var(--text)" placeholder="you@example.com" autofocus>
+    <label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px" data-i18n="auth.password">Password</label>
+    <input id="login-password" type="password" style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);font-size:15px;margin-bottom:16px;outline:none;box-sizing:border-box;background:var(--bg);color:var(--text)" placeholder="••••••••">
+    <div style="text-align:right;margin-bottom:20px">
+      <a href="/forgot-password/" style="font-size:13px;color:#6366f1" data-i18n="auth.forgotPassword">Forgot</a>
+    </div>
+    <button type="button" id="login-submit" style="width:100%;padding:13px;border-radius:10px;border:none;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer" data-i18n="nav.login">Login</button>
+    <p style="text-align:center;margin-top:20px;font-size:14px;color:var(--text2)">
+      <span data-i18n="auth.noAccount">No account</span>
+      <a href="/register/" style="color:var(--primary);font-weight:600" data-i18n="nav.register">Register</a>
+    </p>
+    <p style="text-align:center;margin-top:8px;font-size:13px;color:var(--text3)">
+      <a href="/restore/" style="color:var(--primary)">Restore account</a>
+    </p>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,102 @@
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+  --bg: #f9fafb;
+  --bg2: #ffffff;
+  --bg3: #f3f4f6;
+  --text: #111827;
+  --text2: #6b7280;
+  --text3: #9ca3af;
+  --border: #e5e7eb;
+  --primary: #6366f1;
+  --primary-light: #ede9fe;
+  --primary-text: #7c3aed;
+  --card-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  --card-hover: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+[data-theme="dark"] {
+  --bg: #0f0f13;
+  --bg2: #1a1a24;
+  --bg3: #22222f;
+  --text: #f1f0ff;
+  --text2: #a09db8;
+  --text3: #6b6880;
+  --border: #2e2e40;
+  --primary: #818cf8;
+  --primary-light: #1e1b4b;
+  --primary-text: #a5b4fc;
+  --card-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  --card-hover: 0 8px 24px rgba(0,0,0,0.6);
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.3s, color 0.3s;
+}
+
+a { color: inherit; }
+button:disabled { opacity: 0.6; cursor: not-allowed !important; }
+input, textarea, select { font-family: inherit; }
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+@keyframes bounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-6px); }
+}
+
+.hamburger { display: none; }
+
+@media (max-width: 640px) {
+  .desktop-nav { display: none !important; }
+  .hamburger { display: block !important; }
+}
+
+.product-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 28px;
+}
+@media (max-width: 768px) {
+  .product-detail-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .product-detail-sidebar {
+    position: static !important;
+  }
+}
+
+.cat-pills-wrap {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+  scrollbar-width: none;
+}
+.cat-pills-wrap::-webkit-scrollbar { display: none; }
+
+.product-card-link {
+  text-decoration: none;
+  color: inherit;
+}
+.product-card {
+  background: var(--bg2);
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: box-shadow 0.2s, transform 0.2s;
+  cursor: pointer;
+  box-shadow: var(--card-shadow);
+}
+.product-card:hover {
+  box-shadow: var(--card-hover);
+  transform: translateY(-3px);
+}
