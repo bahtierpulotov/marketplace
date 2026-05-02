@@ -193,3 +193,73 @@ def my_chats(request):
     chats = [fmt(c, 'buyer') for c in as_buyer] + [fmt(c, 'seller') for c in as_seller]
     chats.sort(key=lambda x: x['updated_at'], reverse=True)
     return JsonResponse({'chats': chats})
+
+
+
+
+@csrf_exempt
+def general_ai_chat(request):
+    """
+    AI ёрдамчии умумӣ — маҳсулотҳои бозорро мебинад ва маслиҳат медиҳад.
+    POST /api/ai/general/
+    Body: { "message": "...", "history": [...] }
+    """
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+
+    try:
+        data = json.loads(request.body)
+    except json.JSONDecodeError:
+        return JsonResponse({'error': 'Invalid JSON'}, status=400)
+
+    user_message = data.get('message', '').strip()
+    history = data.get('history', [])
+
+    if not user_message:
+        return JsonResponse({'error': 'Empty message'}, status=400)
+
+    # Бозорда мавҷуд маҳсулотҳоро гирем (50 та охирин)
+    products = Product.objects.filter(
+        is_active=True,
+        owner__is_active=True,
+        owner__is_banned=False,
+    ).select_related('category', 'location').order_by('-created_at')[:50]
+
+    # Маҳсулотҳоро ба матн табдил медиҳем
+    products_text = ''
+    for i, p in enumerate(products, 1):
+        loc = ''
+        if p.location:
+            loc = p.location.name if hasattr(p.location, 'name') else str(p.location)
+        cat = p.category.name if p.category else 'Дигар'
+        products_text += (
+            f'{i}. {p.title} | {p.price} TJS | '
+            f'Категория: {cat} | '
+            f'Ҷойгоҳ: {loc or "Номаълум"}\n'
+        )
+
+    system_prompt = (
+        'Ту AI ёрдамчии бозори онлайн ҳастӣ. '
+        'Номи бозор: Bozor.tj\n\n'
+        'Вазифаи ту:\n'
+        '1. Ба корбар маслиҳат диҳӣ — чӣ харидан, бо кадом буҷет\n'
+        '2. Маҳсулотҳои мавҷударо тавсиф диҳӣ\n'
+        '3. Нархҳоро муқоиса кунӣ\n'
+        '4. Ба ҳар гуна савол дар бораи харид ҷавоб диҳӣ\n\n'
+        f'МАҲСУЛОТҲОИ МАВҶУД ДАР БОЗОР ({len(products)} та):\n'
+        f'{products_text}\n'
+        'Ба забони корбар ҷавоб деҳ. Муфид, мухтасар ва дӯстона бош.'
+    )
+
+    messages = [{'role': 'system', 'content': system_prompt}]
+
+    # Таърихи чатро илова мекунем (охирин 10 паём)
+    for msg in history[-10:]:
+        if msg.get('role') in ('user', 'assistant') and msg.get('content'):
+            messages.append({'role': msg['role'], 'content': msg['content']})
+
+    messages.append({'role': 'user', 'content': user_message})
+
+    reply = groq_complete(messages, max_tokens=800)
+
+    return JsonResponse({'reply': reply})

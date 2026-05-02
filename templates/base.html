@@ -16,6 +16,194 @@
   <script src="{% static 'js/core.js' %}"></script>
   <script src="{% static 'js/site.js' %}"></script>
   {% block extra_js %}{% endblock %}
+
+  <!-- ── AI Ёрдамчии умумӣ ── -->
+  <div id="gen-ai-btn" onclick="toggleGenAI()" title="AI Ёрдамчи" style="
+    position:fixed; bottom:28px; right:28px; z-index:1000;
+    width:56px; height:56px; border-radius:50%;
+    background:linear-gradient(135deg,#6366f1,#8b5cf6);
+    display:flex; align-items:center; justify-content:center;
+    font-size:26px; cursor:pointer;
+    box-shadow:0 4px 20px rgba(99,102,241,0.5);
+    transition:transform 0.2s;
+  " onmouseenter="this.style.transform='scale(1.1)'"
+     onmouseleave="this.style.transform='scale(1)'">
+    🤖
+  </div>
+
+  <!-- AI Chat панел -->
+  <div id="gen-ai-panel" style="
+    position:fixed; bottom:96px; right:28px; z-index:999;
+    width:360px; max-height:520px;
+    background:var(--bg2); border:1px solid var(--border);
+    border-radius:20px; display:none; flex-direction:column;
+    box-shadow:0 8px 40px rgba(0,0,0,0.25);
+    overflow:hidden;
+  ">
+    <!-- Header -->
+    <div style="
+      background:linear-gradient(135deg,#6366f1,#8b5cf6);
+      padding:16px 20px; display:flex; align-items:center; gap:10px;
+    ">
+      <span style="font-size:22px">🤖</span>
+      <div style="flex:1">
+        <p style="margin:0;font-weight:700;color:#fff;font-size:15px">AI Ёрдамчи</p>
+        <p style="margin:0;font-size:12px;color:rgba(255,255,255,0.7)">Bozor.tj • ҳамеша дар хидмат</p>
+      </div>
+      <button onclick="toggleGenAI()" style="
+        background:rgba(255,255,255,0.2); border:none; border-radius:50%;
+        width:28px; height:28px; color:#fff; cursor:pointer; font-size:14px;
+      ">✕</button>
+    </div>
+
+    <!-- Messages -->
+    <div id="gen-ai-msgs" style="
+      flex:1; overflow-y:auto; padding:16px;
+      display:flex; flex-direction:column; gap:10px;
+      min-height:200px; max-height:320px;
+    ">
+      <!-- Welcome message -->
+      <div style="display:flex;gap:8px;align-items:flex-end">
+        <div style="
+          width:28px;height:28px;border-radius:50%;
+          background:var(--primary-light);
+          display:flex;align-items:center;justify-content:center;
+          font-size:14px;flex-shrink:0;
+        ">🤖</div>
+        <div style="
+          background:var(--bg3);border:1px solid var(--border);
+          border-radius:16px 16px 16px 4px;
+          padding:10px 14px;font-size:14px;
+          color:var(--text);line-height:1.5;max-width:85%;
+        ">
+          Салом! Ман AI ёрдамчии Bozor.tj ҳастам 👋<br>
+          Бо кадом маҳсулот ёрдам карда метавонам?
+        </div>
+      </div>
+
+      <!-- Suggestions -->
+      <div style="padding-left:36px;display:flex;flex-wrap:wrap;gap:6px" id="gen-ai-suggestions">
+        <button onclick="genAISend(this.textContent)" style="
+          background:var(--primary-light);color:var(--primary-text);
+          border:1px solid var(--border);border-radius:99px;
+          padding:5px 12px;font-size:12px;cursor:pointer;
+        ">💰 2000 сомон дорам, чӣ харам?</button>
+        <button onclick="genAISend(this.textContent)" style="
+          background:var(--primary-light);color:var(--primary-text);
+          border:1px solid var(--border);border-radius:99px;
+          padding:5px 12px;font-size:12px;cursor:pointer;
+        ">📱 Телефони хуб тавсия деҳ</button>
+        <button onclick="genAISend(this.textContent)" style="
+          background:var(--primary-light);color:var(--primary-text);
+          border:1px solid var(--border);border-radius:99px;
+          padding:5px 12px;font-size:12px;cursor:pointer;
+        ">🔍 Арзонтарин маҳсулот?</button>
+      </div>
+    </div>
+
+    <!-- Input -->
+    <div style="padding:12px;border-top:1px solid var(--border);display:flex;gap:8px">
+      <input id="gen-ai-input" placeholder="Саволи худро нависед..."
+        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();genAISend()}"
+        style="
+          flex:1;padding:10px 14px;border-radius:10px;
+          border:1px solid var(--border);font-size:14px;
+          outline:none;background:var(--bg);color:var(--text);
+        "/>
+      <button onclick="genAISend()" style="
+        background:var(--primary);color:#fff;border:none;
+        border-radius:10px;padding:10px 16px;
+        font-size:16px;cursor:pointer;
+      ">➤</button>
+    </div>
+  </div>
+
+  <script>
+    var genAIHistory = [];
+    var genAIOpen = false;
+    var genAILoading = false;
+
+    function toggleGenAI() {
+      genAIOpen = !genAIOpen;
+      var panel = document.getElementById('gen-ai-panel');
+      panel.style.display = genAIOpen ? 'flex' : 'none';
+      if (genAIOpen) document.getElementById('gen-ai-input').focus();
+    }
+
+    function genAIAppend(role, text) {
+      var msgs = document.getElementById('gen-ai-msgs');
+      var suggestions = document.getElementById('gen-ai-suggestions');
+      if (suggestions) suggestions.remove();
+
+      var isUser = role === 'user';
+      var html = '<div style="display:flex;justify-content:' + (isUser ? 'flex-end' : 'flex-start') + ';gap:8px;align-items:flex-end">' +
+        (isUser ? '' : '<div style="width:28px;height:28px;border-radius:50%;background:var(--primary-light);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">🤖</div>') +
+        '<div style="max-width:82%;padding:10px 14px;border-radius:' +
+        (isUser ? '16px 16px 4px 16px' : '16px 16px 16px 4px') +
+        ';background:' + (isUser ? 'var(--primary)' : 'var(--bg3)') +
+        ';color:' + (isUser ? '#fff' : 'var(--text)') +
+        ';font-size:14px;line-height:1.55;border:' + (isUser ? 'none' : '1px solid var(--border)') +
+        '">' + text.replace(/\n/g, '<br>') + '</div></div>';
+      msgs.insertAdjacentHTML('beforeend', html);
+      msgs.scrollTop = msgs.scrollHeight;
+    }
+
+    function genAITyping(show) {
+      var el = document.getElementById('gen-ai-typing');
+      if (show && !el) {
+        var msgs = document.getElementById('gen-ai-msgs');
+        msgs.insertAdjacentHTML('beforeend',
+          '<div id="gen-ai-typing" style="display:flex;gap:8px;align-items:flex-end">' +
+          '<div style="width:28px;height:28px;border-radius:50%;background:var(--primary-light);display:flex;align-items:center;justify-content:center;font-size:14px">🤖</div>' +
+          '<div style="background:var(--bg3);border:1px solid var(--border);border-radius:16px 16px 16px 4px;padding:12px 16px;display:flex;gap:4px">' +
+          '<span style="animation:bounce 1.2s ease-in-out 0s infinite;display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--primary)"></span>' +
+          '<span style="animation:bounce 1.2s ease-in-out 0.2s infinite;display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--primary)"></span>' +
+          '<span style="animation:bounce 1.2s ease-in-out 0.4s infinite;display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--primary)"></span>' +
+          '</div></div>');
+        msgs.scrollTop = msgs.scrollHeight;
+      } else if (!show && el) {
+        el.remove();
+      }
+    }
+
+    function genAISend(text) {
+      var inp = document.getElementById('gen-ai-input');
+      var msg = (text || inp.value).trim();
+      if (!msg || genAILoading) return;
+      inp.value = '';
+      genAILoading = true;
+
+      genAIAppend('user', msg);
+      genAIHistory.push({ role: 'user', content: msg });
+      genAITyping(true);
+
+      fetch('/api/ai/general/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: msg, history: genAIHistory })
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        genAITyping(false);
+        var reply = d.reply || 'Хато рӯй дод.';
+        genAIAppend('assistant', reply);
+        genAIHistory.push({ role: 'assistant', content: reply });
+      })
+      .catch(function() {
+        genAITyping(false);
+        genAIAppend('assistant', '❌ Хато рӯй дод. Дубора кӯшиш кунед.');
+      })
+      .finally(function() { genAILoading = false; });
+    }
+  </script>
+
+  <style>
+    @keyframes bounce {
+      0%, 60%, 100% { transform: translateY(0); }
+      30% { transform: translateY(-6px); }
+    }
+  </style>
+
 </body>
 
 </html>

@@ -133,6 +133,24 @@
         });
     }
 
+    /* ── Locations: select dropdown пур кунед ── */
+    MP.apiFetch('/locations/', { method: 'GET' })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        var locEl = document.getElementById('home-location');
+        if (!locEl) return;
+        var locs = data.locations || [];
+        locEl.innerHTML = '<option value="">— Ҳама ҷойҳо —</option>' +
+          locs.map(function (l) {
+            return '<option value="' + l.id + '">' + l.name + (l.region ? ' (' + l.region + ')' : '') + '</option>';
+          }).join('');
+        locEl.addEventListener('change', function () {
+          filters.location = locEl.value || undefined;
+          loadProducts(true);
+        });
+      })
+      .catch(function () {});
+
     MP.apiFetch('/categories/', { method: 'GET' })
       .then(function (r) {
         return r.json();
@@ -188,13 +206,12 @@
         }
       });
 
-    ['home-min-price', 'home-max-price', 'home-location'].forEach(function (id) {
+    ['home-min-price', 'home-max-price'].forEach(function (id) {
       var node = document.getElementById(id);
       if (!node) return;
       node.addEventListener('blur', function () {
         if (id === 'home-min-price') filters.min_price = node.value || undefined;
         if (id === 'home-max-price') filters.max_price = node.value || undefined;
-        if (id === 'home-location') filters.location = node.value || undefined;
         loadProducts(true);
       });
     });
@@ -214,7 +231,7 @@
         var loc = document.getElementById('home-location');
         if (mn) mn.value = '';
         if (mx) mx.value = '';
-        if (loc) loc.value = '';
+        if (loc) { loc.value = ''; }
         if (sortEl) sortEl.value = 'newest';
         loadProducts(true);
       });
@@ -1083,121 +1100,56 @@
     if (back) back.href = '/product/' + id + '/';
     var box = document.getElementById('dc-msgs');
     var inp = document.getElementById('dc-input');
-    var lastMsgId = null;
-    var pollTimer = null;
-    var chatInfo = null;
-
-    function escHtml(s) {
-      return String(s)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
-    }
-
-    function msgHtml(m) {
-      var mine = m.is_mine;
-      var time = '';
-      if (m.timestamp) {
-        var d = new Date(m.timestamp);
-        time = '<div style="font-size:10px;opacity:0.5;margin-top:3px;text-align:' +
-          (mine ? 'right' : 'left') + '">' +
-          d.getHours().toString().padStart(2,'0') + ':' +
-          d.getMinutes().toString().padStart(2,'0') + '</div>';
-      }
-      return '<div style="display:flex;justify-content:' +
-        (mine ? 'flex-end' : 'flex-start') +
-        ';margin-bottom:2px"><div style="max-width:75%;padding:10px 14px;border-radius:' +
-        (mine ? '16px 16px 4px 16px' : '16px 16px 16px 4px') +
-        ';background:' + (mine ? 'var(--primary)' : 'var(--bg2)') +
-        ';color:' + (mine ? '#fff' : 'var(--text)') +
-        ';font-size:14px;line-height:1.5;border:' +
-        (mine ? 'none' : '1px solid var(--border)') +
-        '">' + escHtml(m.content) + time + '</div></div>';
-    }
-
-    function renderAll(msgs, info) {
+    function render(msgs, info) {
       if (info) {
-        chatInfo = info;
-        var titleEl = document.getElementById('dc-title');
-        var subEl = document.getElementById('dc-sub');
-        if (titleEl) titleEl.textContent = '💬 ' +
-          (info.other_user && info.other_user.full_name ? info.other_user.full_name : '...');
-        if (subEl) subEl.textContent = info.product && info.product.title ? info.product.title : '';
+        document.getElementById('dc-title').textContent = '💬 ' + (info.other_user && info.other_user.full_name ? info.other_user.full_name : '...');
+        document.getElementById('dc-sub').textContent = info.product && info.product.title ? info.product.title : '';
       }
-      var atBottom = box.scrollHeight - box.scrollTop - box.clientHeight < 60;
-      box.innerHTML = (msgs || []).map(msgHtml).join('');
-      if (atBottom) box.scrollTop = box.scrollHeight;
-      if (msgs && msgs.length) lastMsgId = msgs[msgs.length - 1].id;
-    }
-
-    function appendMsg(m) {
-      var atBottom = box.scrollHeight - box.scrollTop - box.clientHeight < 80;
-      box.insertAdjacentHTML('beforeend', msgHtml(m));
-      if (atBottom) box.scrollTop = box.scrollHeight;
-      lastMsgId = m.id;
-    }
-
-    /* ── Polling: ҳар 3 сония паёмҳои навро мегирад ── */
-    function poll() {
-      MP.apiFetch('/chat/' + id + '/')
-        .then(function (r) { return r.json(); })
-        .then(function (d) {
-          if (!chatInfo) {
-            renderAll(d.messages, { product: d.product, other_user: d.other_user });
-            return;
-          }
-          /* Танҳо паёмҳои навро илова мекунад */
-          var msgs = d.messages || [];
-          var newMsgs = lastMsgId
-            ? msgs.filter(function (m) {
-                return m.id !== lastMsgId &&
-                  msgs.indexOf(m) > msgs.findIndex(function(x){ return x.id === lastMsgId; });
-              })
-            : msgs;
-          newMsgs.forEach(function (m) { appendMsg(m); });
+      box.innerHTML = (msgs || [])
+        .map(function (m) {
+          var mine = m.is_mine;
+          return (
+            '<div style="display:flex;justify-content:' +
+            (mine ? 'flex-end' : 'flex-start') +
+            '"><div style="max-width:75%;padding:10px 14px;border-radius:' +
+            (mine ? '16px 16px 4px 16px' : '16px 16px 16px 4px') +
+            ';background:' +
+            (mine ? 'var(--primary)' : 'var(--bg2)') +
+            ';color:' +
+            (mine ? '#fff' : 'var(--text)') +
+            ';font-size:14px;border:' +
+            (mine ? 'none' : '1px solid var(--border)') +
+            '">' +
+            escapeHtml2(m.content) +
+            '</div></div>'
+          );
         })
-        .catch(function () { /* network error — skip */ });
+        .join('');
+      box.scrollTop = box.scrollHeight;
     }
-
-    /* Аввалин бор маълумот мегирад */
     MP.apiFetch('/chat/' + id + '/')
-      .then(function (r) { return r.json(); })
-      .then(function (d) {
-        renderAll(d.messages, { product: d.product, other_user: d.other_user });
-        box.scrollTop = box.scrollHeight;
-
-        /* Polling оғоз мешавад — ҳар 3 сония */
-        pollTimer = setInterval(poll, 3000);
-      });
-
-    /* Фиристодани паём */
-    function sendMsg() {
-      var t = inp.value.trim();
-      if (!t) return;
-      inp.value = '';
-      inp.focus();
-      MP.apiFetch('/chat/' + id + '/', {
-        method: 'POST',
-        body: JSON.stringify({ content: t }),
+      .then(function (r) {
+        return r.json();
       })
-        .then(function (r) { return r.json(); })
-        .then(function (m) {
-          m.is_mine = true;
-          appendMsg(m);
-        });
-    }
-
-    var sendBtn = document.getElementById('dc-send');
-    if (sendBtn) sendBtn.onclick = sendMsg;
-    inp.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMsg(); }
-    });
-
-    /* Саҳифа баста шавад — polling қатъ мешавад */
-    window.addEventListener('beforeunload', function () {
-      if (pollTimer) clearInterval(pollTimer);
-    });
+      .then(function (d) {
+        render(d.messages, { product: d.product, other_user: d.other_user });
+        document.getElementById('dc-send').onclick = function () {
+          var t = inp.value.trim();
+          if (!t) return;
+          inp.value = '';
+          MP.apiFetch('/chat/' + id + '/', {
+            method: 'POST',
+            body: JSON.stringify({ content: t }),
+          })
+            .then(function (r) {
+              return r.json();
+            })
+            .then(function (m) {
+              d.messages.push(m);
+              render(d.messages, { product: d.product, other_user: d.other_user });
+            });
+        };
+      });
   }
 
   function initPublicProfile() {
