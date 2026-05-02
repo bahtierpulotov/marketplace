@@ -24,7 +24,10 @@
   }
 
   function initHome() {
+    var params = new URLSearchParams(location.search);
+    var catFromUrl = params.get('category');
     var filters = { sort: 'newest', page: 1 };
+    if (catFromUrl) filters.category = catFromUrl;
     var products = [];
     var total = 0;
     var pages = 1;
@@ -90,7 +93,8 @@
       if (!grid) return;
       grid.innerHTML = products.map(buildCard).join('');
       grid.style.display = 'grid';
-      grid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(200px, 1fr))';
+      grid.style.gridTemplateColumns =
+        'repeat(auto-fill, minmax(min(178px, 100%), 1fr))';
       grid.style.gap = '16px';
       if (countEl) countEl.textContent = total + ' listings found';
       if (emptyEl) emptyEl.style.display = products.length ? 'none' : 'block';
@@ -565,7 +569,8 @@
           })
           .join('');
         grid.style.display = 'grid';
-        grid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(200px, 1fr))';
+        grid.style.gridTemplateColumns =
+        'repeat(auto-fill, minmax(min(178px, 100%), 1fr))';
         grid.style.gap = '16px';
       });
 
@@ -791,7 +796,11 @@
       ? '<img id="pd-main-img" src="' + images[0].url + '" style="width:100%;height:100%;object-fit:cover" alt=""/>'
       : '<span style="font-size:80px">📦</span>';
     var ownerActions = isOwner
-      ? '<div style="background:var(--bg2);border-radius:16px;border:1px solid var(--border);padding:16px;margin-bottom:16px;display:flex;gap:10px"><span style="font-size:13px;color:var(--text2);align-self:center;flex:1">🔧 Шумо соҳиби ин эълон ҳастед</span><a href="/product/' +
+      ? '<div style="background:var(--bg2);border-radius:16px;border:1px solid var(--border);padding:16px;margin-bottom:16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center"><span style="font-size:13px;color:var(--text2);flex:1;min-width:160px">🔧 Шумо соҳиби ин эълон ҳастед</span><a href="/chats/?product=' +
+        encodeURIComponent(id) +
+        '" style="padding:9px 16px;border-radius:9px;border:1px solid var(--border);background:var(--primary-light);text-decoration:none;color:var(--primary-text);font-size:13px;font-weight:700">💬 ' +
+        escapeHtml2(MP.t('chats.withBuyers')) +
+        '</a><a href="/product/' +
         id +
         '/edit/" style="padding:9px 18px;border-radius:9px;border:1px solid var(--border);background:var(--bg3);text-decoration:none;color:var(--text);font-size:13px;font-weight:600">✏️ ' +
         MP.t('product.edit') +
@@ -821,18 +830,46 @@
           id +
           '/" style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px;border-radius:12px;background:var(--bg3);border:1px solid var(--border);color:var(--text);text-decoration:none;font-weight:600;font-size:15px;box-sizing:border-box">✉️ Паём фиристодан</a>'
         : '';
-    var phone = p.owner.phone
-      ? '<a href="tel:' +
-        p.owner.phone +
-        '" style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px;border-radius:12px;background:var(--primary);color:#fff;text-decoration:none;font-weight:700;font-size:15px;margin-bottom:10px;box-sizing:border-box">📞 ' +
-        p.owner.phone +
-        '</a>'
-      : '';
-    var wa = p.owner.phone
-      ? '<a href="https://wa.me/' +
-        String(p.owner.phone).replace(/\D/g, '') +
-        '" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px;border-radius:12px;background:#25d366;color:#fff;text-decoration:none;font-weight:700;font-size:15px;margin-bottom:10px;box-sizing:border-box">💬 WhatsApp</a>'
-      : '';
+    var sellerContact = '';
+    if (!isOwner) {
+      if (p.owner.phone) {
+        var rawPhone = String(p.owner.phone).trim();
+        var telBody = rawPhone.replace(/^tel:/i, '').trim();
+        var waDigits = telBody.replace(/\D/g, '');
+        var wtLine = MP.t('product.whatsPrefill');
+        if (p.title) {
+          wtLine +=
+            ': «' +
+            String(p.title).slice(0, 140).replace(/\s+/g, ' ').trim() +
+            '»';
+        }
+        var waHref =
+          waDigits.length > 0 ? 'https://wa.me/' + waDigits + '?text=' + encodeURIComponent(wtLine) : '';
+        sellerContact +=
+          '<div style="margin-bottom:16px;padding:14px;border-radius:14px;border:1px solid var(--border);background:var(--bg3);box-sizing:border-box">' +
+          '<p style="margin:0 0 8px;font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.07em">' +
+          escapeHtml2(MP.t('product.phone')) +
+          '</p>' +
+          '<a href="tel:' +
+          encodeURIComponent(telBody) +
+          '" style="display:block;font-size:18px;font-weight:800;color:var(--primary-text);letter-spacing:.02em;text-decoration:none;margin-bottom:12px;line-height:1.35;word-break:break-word">' +
+          escapeHtml2(rawPhone) +
+          '</a>' +
+          (waHref
+            ? '<a href="' +
+              waHref +
+              '" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:12px 14px;border-radius:12px;background:#128c7e;color:#fff;text-decoration:none;font-weight:700;font-size:15px;box-sizing:border-box;background-image:linear-gradient(180deg,#25d366 0%,#128c7e 100%);box-shadow:0 4px 14px rgba(37,211,102,0.35)">💬 ' +
+              escapeHtml2(MP.t('product.whatsapp')) +
+              '</a>'
+            : '') +
+          '</div>';
+      } else {
+        sellerContact +=
+          '<p style="margin:0 0 14px;font-size:13px;color:var(--text3);line-height:1.5">' +
+          escapeHtml2(MP.t('product.noPhoneSeller')) +
+          '</p>';
+      }
+    }
     var avatar = p.owner.avatar
       ? '<img src="' + p.owner.avatar + '" alt="" style="width:100%;height:100%;object-fit:cover"/>'
       : (p.owner.full_name && p.owner.full_name[0] ? p.owner.full_name[0].toUpperCase() : '?');
@@ -902,8 +939,7 @@
       '</div><div><p style="margin:0;font-weight:700;color:var(--text);font-size:15px">' +
       (p.owner.full_name || 'Фурӯшанда') +
       '</p><p style="margin:2px 0 0;font-size:12px;color:var(--primary)">Профилро бинед →</p></div></div></a>' +
-      phone +
-      wa +
+      sellerContact +
       chat +
       auth +
       '</div></div></div></div>'
@@ -1096,14 +1132,27 @@
   function initDirectChat() {
     if (!MP.requireAuth()) return;
     var id = document.body.getAttribute('data-product-id');
+    var qp = new URLSearchParams(window.location.search);
+    var buyerParam = qp.get('buyer');
+    function chatUrl() {
+      var u = '/chat/' + id + '/';
+      if (buyerParam) u += '?buyer=' + encodeURIComponent(buyerParam);
+      return u;
+    }
+
     var back = document.getElementById('dc-back');
     if (back) back.href = '/product/' + id + '/';
     var box = document.getElementById('dc-msgs');
     var inp = document.getElementById('dc-input');
-    function render(msgs, info) {
-      if (info) {
-        document.getElementById('dc-title').textContent = '💬 ' + (info.other_user && info.other_user.full_name ? info.other_user.full_name : '...');
-        document.getElementById('dc-sub').textContent = info.product && info.product.title ? info.product.title : '';
+    var sendBtn = document.getElementById('dc-send');
+
+    function render(msgs, meta) {
+      if (meta) {
+        var ou = meta.other_user || {};
+        document.getElementById('dc-title').textContent =
+          '💬 ' + (ou.full_name ? ou.full_name : '…');
+        document.getElementById('dc-sub').textContent =
+          meta.product && meta.product.title ? meta.product.title : '';
       }
       box.innerHTML = (msgs || [])
         .map(function (m) {
@@ -1127,28 +1176,147 @@
         .join('');
       box.scrollTop = box.scrollHeight;
     }
-    MP.apiFetch('/chat/' + id + '/')
+
+    MP.apiFetch(chatUrl()).then(function (r) {
+      return r.json().catch(function () {
+        return {};
+      }).then(function (d) {
+        return { ok: r.ok, d: d };
+      });
+    }).then(function (res) {
+      if (!res.ok || (res.d && res.d.error)) {
+        var key = res.d && res.d.error;
+        var msg =
+          key === 'buyer_required'
+            ? MP.t('chats.buyerRequired')
+            : MP.t('common.error');
+        box.innerHTML =
+          '<div style="padding:24px;color:var(--text2);text-align:center;line-height:1.55;font-size:14px">' +
+          escapeHtml2(msg) +
+          '<br><br><a href="/chats/" style="display:inline-block;margin-top:4px;color:var(--primary);font-weight:800">' +
+          escapeHtml2(MP.t('chats.goInbox')) +
+          '</a></div>';
+        if (inp) inp.disabled = true;
+        if (sendBtn) sendBtn.disabled = true;
+        return;
+      }
+      var state = res.d;
+
+      render(state.messages, {
+        product: state.product,
+        other_user: state.other_user,
+      });
+
+      function postMessage() {
+        var t = inp.value.trim();
+        if (!t) return;
+        inp.value = '';
+        MP.apiFetch(chatUrl(), {
+          method: 'POST',
+          body: JSON.stringify({ content: t }),
+        })
+          .then(function (r) {
+            return r.json().catch(function () {
+              return {};
+            }).then(function (m) {
+              return { ok: r.ok, m: m };
+            });
+          })
+          .then(function (rx) {
+            if (!rx.ok || (rx.m && rx.m.error)) return;
+            state.messages.push(rx.m);
+            render(state.messages, {
+              product: state.product,
+              other_user: state.other_user,
+            });
+          });
+      }
+
+      sendBtn.onclick = postMessage;
+      inp.onkeydown = function (ev) {
+        if (ev.key === 'Enter' && !ev.shiftKey) {
+          ev.preventDefault();
+          postMessage();
+        }
+      };
+    }).catch(function () {
+      box.innerHTML =
+        '<div style="padding:24px;color:var(--text2);text-align:center">' +
+        escapeHtml2(MP.t('common.error')) +
+        '</div>';
+      if (sendBtn) sendBtn.disabled = true;
+      if (inp) inp.disabled = true;
+    });
+  }
+
+  function initChatsInbox() {
+    if (!MP.requireAuth()) return;
+    var root = document.getElementById('chats-root');
+    if (!root) return;
+    var filterPid = new URLSearchParams(location.search).get('product');
+
+    MP.apiFetch('/chats/')
       .then(function (r) {
         return r.json();
       })
-      .then(function (d) {
-        render(d.messages, { product: d.product, other_user: d.other_user });
-        document.getElementById('dc-send').onclick = function () {
-          var t = inp.value.trim();
-          if (!t) return;
-          inp.value = '';
-          MP.apiFetch('/chat/' + id + '/', {
-            method: 'POST',
-            body: JSON.stringify({ content: t }),
+      .then(function (data) {
+        var chats = data.chats || [];
+        if (filterPid) {
+          chats = chats.filter(function (c) {
+            return String(c.product_id) === String(filterPid);
+          });
+        }
+        if (!chats.length) {
+          root.innerHTML =
+            '<p style="color:var(--text3);text-align:center;padding:48px 16px;font-size:15px;line-height:1.5">' +
+            escapeHtml2(MP.t('chats.empty')) +
+            '</p>';
+          return;
+        }
+        root.innerHTML = chats
+          .map(function (c) {
+            var href =
+              c.role === 'seller'
+                ? '/chat/' + c.product_id + '/?buyer=' + encodeURIComponent(c.buyer_id)
+                : '/chat/' + c.product_id + '/';
+            var badge =
+              (c.unread || 0) > 0
+                ? '<span style="flex-shrink:0;margin-left:8px;background:#ef4444;color:#fff;font-size:11px;font-weight:800;padding:3px 9px;border-radius:99px">' +
+                  String(c.unread) +
+                  '</span>'
+                : '';
+            var roleTag =
+              c.role === 'seller'
+                ? '<span style="font-size:11px;color:var(--accent-blue);font-weight:700;margin-left:6px">' +
+                  '· ' +
+                  escapeHtml2(MP.t('chats.asSeller')) +
+                  '</span>'
+                : '<span style="font-size:11px;color:var(--text3);margin-left:6px">· ' +
+                  escapeHtml2(MP.t('chats.asBuyer')) +
+                  '</span>';
+            return (
+              '<a href="' +
+              href +
+              '" style="display:block;text-decoration:none;margin-bottom:10px;color:inherit"><div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px 18px;display:flex;align-items:flex-start;gap:12px;box-shadow:var(--card-shadow);transition:transform .15s" onmouseover="this.style.transform=\'translateY(-2px)\'" onmouseout="this.style.transform=\'none\'"><div style="flex:1;min-width:0"><p style="margin:0 0 4px;font-weight:800;font-size:15px;color:var(--text);display:flex;flex-wrap:wrap;align-items:center;gap:4px">' +
+              escapeHtml2(c.other_user && c.other_user.full_name ? c.other_user.full_name : '…') +
+              badge +
+              '</p>' +
+              '<p style="margin:0 0 4px;font-size:13px;color:var(--primary);font-weight:600">' +
+              escapeHtml2(c.product_title || '') +
+              roleTag +
+              '</p>' +
+              '<p style="margin:0;font-size:13px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' +
+              escapeHtml2(c.last_message || '—') +
+              '</p></div></div></a>'
+            );
           })
-            .then(function (r) {
-              return r.json();
-            })
-            .then(function (m) {
-              d.messages.push(m);
-              render(d.messages, { product: d.product, other_user: d.other_user });
-            });
-        };
+          .join('');
+      })
+      .catch(function () {
+        root.innerHTML =
+          '<p style="color:#ef4444;text-align:center">' +
+          escapeHtml2(MP.t('common.error')) +
+          '</p>';
       });
   }
 
@@ -1204,7 +1372,8 @@
             })
             .join('');
           grid.style.display = 'grid';
-          grid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(200px, 1fr))';
+          grid.style.gridTemplateColumns =
+        'repeat(auto-fill, minmax(min(178px, 100%), 1fr))';
           grid.style.gap = '16px';
         });
       })
@@ -1226,6 +1395,7 @@
     product_detail: initProductDetail,
     edit_product: initEditProduct,
     direct_chat: initDirectChat,
+    chats: initChatsInbox,
     public_profile: initPublicProfile,
     not_found: function () {},
   };

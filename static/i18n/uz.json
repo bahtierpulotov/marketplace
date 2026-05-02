@@ -6,7 +6,8 @@
     "register": "Ro'yxatdan o'tish",
     "profile": "Profil",
     "logout": "Chiqish",
-    "myListings": "Mening e'lonlarim"
+    "myListings": "Mening e'lonlarim",
+    "chats": "Xabarlar"
   },
   "home": {
     "title": "Hamma narsani top, hamma narsani sot",
@@ -29,6 +30,9 @@
     "likes": "yoqtirishlar",
     "postedBy": "Sotuvchi",
     "contact": "Sotuvchi bilan bog'lanish",
+    "phone": "Telefon",
+    "noPhoneSeller": "Sotuvchi profilda telefon raqamini ko'rsatmagan.",
+    "whatsPrefill": "Salom! Bozor'dagi ushbu e'lon meni qiziqtirmoqda",
     "whatsapp": "WhatsApp",
     "like": "Yoqtirish",
     "unlike": "Yoqtirmaslik",
@@ -36,6 +40,15 @@
     "delete": "O'chirish",
     "deleteConfirm": "Ushbu e'lonni o'chirishni xohlaysizmi?",
     "share": "Ulashish"
+  },
+  "chats": {
+    "title": "Xabarlar",
+    "empty": "Hali suhbat yo'q — e'lon sahifasida «Xabar yuboring» ustiga bosing.",
+    "buyerRequired": "Sotuvchi sifatida xaridor tanlash kerak. «Xabarlar» boʻlimidan kiriting.",
+    "goInbox": "Ro'yxatga o'tish",
+    "withBuyers": "Xaridorlar bilan chat",
+    "asSeller": "sotuvchi",
+    "asBuyer": "xaridor"
   },
   "ai": {
     "title": "Ushbu mahsulot haqida AIdan so'rang",
@@ -86,6 +99,34 @@
     "deactivateConfirm": "Barcha e'lonlaringiz yashiriladi. Davom etasizmi?",
     "delete": "Hisobni o'chirib tashlash",
     "deleteConfirm": "Bu qaytarib bo'lmaydi. Ishonchingiz komilmi?"
+  },
+  "sidebar": {
+    "menu": "Menyu",
+    "home": "Bosh sahifa",
+    "categories": "Turkumlar",
+    "quick": "Tezkor",
+    "tech": "Texnika",
+    "electronics": "Elektronika",
+    "homeGarden": "Uy va bog'i",
+    "theme": "Mavzu",
+    "premiumTitle": "Premium akkaunt",
+    "premiumDesc": "E'loningizni koʻtarib, koʻproq e'tiborga éga boʻling.",
+    "premiumCta": "Batafsil",
+    "admin": "Admin",
+    "adminPanelAria": "Platforma bilan aloqa"
+  },
+  "trust": {
+    "title": "Xavfsiz va ishonchli",
+    "b1": "E'lonlar platformada tekshiriladi",
+    "b2": "Shaxsiy ma'lumotlar himoyalanadi",
+    "b3": "Muhim toʻlovlar ishonchli joylarda uchrashing"
+  },
+  "footer": {
+    "tagline": "Tojikistonning onlayn bozori",
+    "contactLead": "Platforma egasi bilan aloqa",
+    "email": "Email",
+    "telegram": "Telegram",
+    "whatsapp": "WhatsApp"
   },
   "common": {
     "loading": "Yuklanmoqda...",

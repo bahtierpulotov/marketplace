@@ -6,7 +6,8 @@
     "register": "Register",
     "profile": "Profile",
     "logout": "Logout",
-    "myListings": "My Listings"
+    "myListings": "My Listings",
+    "chats": "Messages"
   },
   "home": {
     "title": "Find anything, sell anything",
@@ -29,6 +30,9 @@
     "likes": "likes",
     "postedBy": "Posted by",
     "contact": "Contact seller",
+    "phone": "Phone",
+    "noPhoneSeller": "The seller has not added a phone number in their profile.",
+    "whatsPrefill": "Hi! I'm interested in this listing on Bozor",
     "whatsapp": "WhatsApp",
     "like": "Like",
     "unlike": "Unlike",
@@ -36,6 +40,15 @@
     "delete": "Delete",
     "deleteConfirm": "Are you sure you want to delete this listing?",
     "share": "Share"
+  },
+  "chats": {
+    "title": "Messages",
+    "empty": "No conversations yet — open a product and tap “Send message”.",
+    "buyerRequired": "As the seller you need to choose a buyer thread. Use “Messages”.",
+    "goInbox": "Open inbox",
+    "withBuyers": "Buyer chats",
+    "asSeller": "seller",
+    "asBuyer": "buyer"
   },
   "ai": {
     "title": "Ask AI about this product",
@@ -86,6 +99,34 @@
     "deactivateConfirm": "Deactivating will hide all your listings. Continue?",
     "delete": "Delete account",
     "deleteConfirm": "This is permanent. Are you sure?"
+  },
+  "sidebar": {
+    "menu": "Menu",
+    "home": "Home",
+    "categories": "Categories",
+    "quick": "Shortcuts",
+    "tech": "Tech",
+    "electronics": "Electronics",
+    "homeGarden": "Home & garden",
+    "theme": "Theme",
+    "premiumTitle": "Premium account",
+    "premiumDesc": "Boost your listings so more buyers notice you.",
+    "premiumCta": "See how",
+    "admin": "Admin",
+    "adminPanelAria": "Platform contact details"
+  },
+  "trust": {
+    "title": "Safe & reliable",
+    "b1": "Basic checks help keep misleading listings low",
+    "b2": "We protect sensitive account data",
+    "b3": "Meet in person or trusted places when paying"
+  },
+  "footer": {
+    "tagline": "Tajikistan's online marketplace",
+    "contactLead": "Contact the platform",
+    "email": "Email",
+    "telegram": "Telegram",
+    "whatsapp": "WhatsApp"
   },
   "common": {
     "loading": "Loading...",

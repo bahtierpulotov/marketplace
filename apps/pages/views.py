@@ -41,6 +41,10 @@ def page_product_edit(request, product_id):
     return render(request, 'pages/edit_product.html', {'product_id': str(product_id)})
 
 
+def page_chats(request):
+    return render(request, 'pages/chats.html')
+
+
 def page_direct_chat(request, product_id):
     return render(request, 'pages/direct_chat.html', {'product_id': str(product_id)})
 

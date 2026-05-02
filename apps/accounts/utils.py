@@ -57,6 +57,19 @@ def send_reset_email(email, code):
     )
 
 
+def send_registration_welcome_email(email, full_name=''):
+    name = (full_name or '').strip()
+    greeting = f'Азиз {name},\n\n' if name else 'Азизи корбар,\n\n'
+    body = greeting + 'Шумо бо мувафақият аз қайд гузаштед.\nХуш омадед ба Marketplace.'
+    send_mail(
+        subject='Marketplace — қайд муфақ анҷом ёфт',
+        message=body,
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        recipient_list=[email],
+        fail_silently=False,
+    )
+
+
 def user_to_dict(user, include_private=False):
     data = {
         'id': str(user.id),

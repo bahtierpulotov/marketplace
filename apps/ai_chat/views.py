@@ -104,32 +104,59 @@ def delete_chat(request, product_id):
 
 # ─── DIRECT CHAT (buyer ↔ seller) ─────────────────────────────────────────────
 
+def _buyer_query_param(request, post_payload):
+    """For seller threading: buyer id from ?buyer= or JSON buyer_id."""
+    return request.GET.get('buyer') or (post_payload or {}).get('buyer_id')
+
+
 @csrf_exempt
 @require_auth
 def direct_chat(request, product_id):
-    """GET history | POST send message — between buyer and seller."""
-    from apps.products.models import Product as Prod
-    product = get_object_or_404(Prod, id=product_id, is_active=True)
+    """GET history | POST message. Buyer: /chat/<product>/. Seller: ...?buyer=<buyer_uuid>"""
+    product = get_object_or_404(Product, id=product_id, is_active=True)
     user = request.user_jwt
+    uid = str(user.id)
+    owner_id = str(product.owner_id)
+    post_data = {}
+    if request.method == 'POST':
+        try:
+            post_data = json.loads(request.body or '{}')
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON'}, status=400)
 
-    # Owner cannot chat with themselves
-    if str(product.owner_id) == str(user.id):
-        return JsonResponse({'error': 'You cannot chat with yourself'}, status=400)
+    buyer_ref = _buyer_query_param(request, post_data)
 
-    chat, _ = DirectChat.objects.get_or_create(product=product, buyer=user)
+    if owner_id == uid:
+        if not buyer_ref:
+            return JsonResponse({'error': 'buyer_required'}, status=400)
+        chat = get_object_or_404(
+            DirectChat.objects.select_related('buyer', 'product'),
+            product_id=product_id,
+            buyer_id=buyer_ref,
+        )
+        other_user = chat.buyer
+    else:
+        if buyer_ref and str(buyer_ref) != uid:
+            return JsonResponse({'error': 'Forbidden'}, status=403)
+        chat, _ = DirectChat.objects.get_or_create(product=product, buyer=user)
+        other_user = product.owner
 
     if request.method == 'GET':
         msgs = chat.messages.select_related('sender').all()
-        # Mark incoming as read
         chat.messages.filter(is_read=False).exclude(sender=user).update(is_read=True)
+        ou_avatar = (
+            other_user.avatar.url if getattr(other_user, 'avatar', None) and other_user.avatar else None
+        )
         return JsonResponse({
             'chat_id': str(chat.id),
+            'buyer_id': str(chat.buyer_id),
             'product': {'id': str(product.id), 'title': product.title},
             'other_user': {
-                'id': str(product.owner.id),
-                'full_name': product.owner.full_name,
-                'avatar': product.owner.avatar.url if product.owner.avatar else None,
+                'id': str(other_user.id),
+                'full_name': other_user.full_name or other_user.email,
+                'avatar': ou_avatar,
             },
+            'you_are_seller': owner_id == uid,
             'messages': [
                 {
                     'id': str(m.id),
@@ -138,28 +165,27 @@ def direct_chat(request, product_id):
                     'content': m.content,
                     'timestamp': m.timestamp.isoformat(),
                     'is_read': m.is_read,
-                    'is_mine': str(m.sender_id) == str(user.id),
+                    'is_mine': str(m.sender_id) == uid,
                 }
                 for m in msgs
             ]
         })
 
     if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-        except json.JSONDecodeError:
-            return JsonResponse({'error': 'Invalid JSON'}, status=400)
-        content = data.get('content', '').strip()
+        content = post_data.get('content', '').strip()
         if not content:
             return JsonResponse({'error': 'Empty message'}, status=400)
+        if len(content) > 8000:
+            return JsonResponse({'error': 'Message too long'}, status=400)
         msg = DirectMessage.objects.create(chat=chat, sender=user, content=content)
-        chat.save()  # update updated_at
+        chat.save()
         return JsonResponse({
             'id': str(msg.id),
-            'sender_id': str(user.id),
+            'sender_id': uid,
             'sender_name': user.full_name,
             'content': msg.content,
             'timestamp': msg.timestamp.isoformat(),
+            'is_read': msg.is_read,
             'is_mine': True,
         }, status=201)
 
@@ -181,10 +207,11 @@ def my_chats(request):
         other = chat.product.owner if role == 'buyer' else chat.buyer
         return {
             'chat_id': str(chat.id),
+            'buyer_id': str(chat.buyer_id),
             'product_id': str(chat.product_id),
             'product_title': chat.product.title,
             'other_user': {'id': str(other.id), 'full_name': other.full_name},
-            'last_message': last.content[:60] if last else None,
+            'last_message': last.content[:140] if last else None,
             'updated_at': chat.updated_at.isoformat(),
             'unread': unread,
             'role': role,

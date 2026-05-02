@@ -1,0 +1,69 @@
+{% load static %}
+<aside class="mp-sidebar" id="mp-sidebar" aria-label="Меню">
+  <div class="mp-sidebar-inner">
+    <a href="/" class="mp-brand">
+      <span class="mp-brand-badge" aria-hidden="true">🛍️</span>
+      <span class="mp-brand-title">Bozor</span>
+    </a>
+    <p class="mp-nav-label" data-i18n="sidebar.menu">Бозӣ</p>
+    <a href="/"
+      class="mp-sidebar-link{% if request.path == '/' %} mp-sidebar-link--active{% endif %}"
+      data-i18n="sidebar.home">Ҳона</a>
+    <a href="/chats/" id="sidebar-chats" style="display:none" class="mp-sidebar-link" data-i18n="nav.chats">Паёмҳо</a>
+    <a href="/#category-pills" class="mp-sidebar-link" data-i18n="sidebar.categories">Категорияҳо</a>
+    <p class="mp-nav-label" data-i18n="sidebar.quick">Шитоб</p>
+    <div id="sidebar-quick-cats" class="mp-sidebar-quick-cats" aria-live="polite"></div>
+
+    <div class="mp-sidebar-extra">
+      <button type="button" class="mp-theme-sidebar" id="theme-toggle-sidebar" title="">
+        <span id="theme-toggle-icon-sidebar">🌙</span>
+        <span data-i18n="sidebar.theme">Роҳнамои ранг</span>
+      </button>
+      {% if platform_contact.email_href or platform_contact.telegram_href or platform_contact.whatsapp_href %}
+      <div class="mp-sidebar-admin-block">
+        <button type="button" class="mp-sidebar-link mp-sidebar-admin-toggle" id="sidebar-admin-toggle" aria-expanded="false" aria-controls="sidebar-admin-panel">
+          <span class="mp-sidebar-admin-chevron" aria-hidden="true">▾</span>
+          <span data-i18n="sidebar.admin">Админ</span>
+        </button>
+        <div id="sidebar-admin-panel" class="mp-sidebar-admin-panel" role="region" data-i18n-aria-label="sidebar.adminPanelAria">
+          <p class="mp-sidebar-admin-lead" data-i18n="footer.contactLead">Тамос бо соҳиби платформа</p>
+          <div class="mp-sidebar-contact-list" role="list">
+            {% if platform_contact.email_href %}
+              <a role="listitem" class="mp-footer-contact-row" href="{{ platform_contact.email_href }}">
+                <span class="mp-footer-contact-icon" aria-hidden="true">✉️</span>
+                <span class="mp-footer-contact-body">
+                  <span class="mp-footer-contact-label" data-i18n="footer.email">Email</span>
+                  <span class="mp-footer-contact-value">{{ platform_contact.email }}</span>
+                </span>
+              </a>
+            {% endif %}
+            {% if platform_contact.telegram_href %}
+              <a role="listitem" class="mp-footer-contact-row" href="{{ platform_contact.telegram_href }}" rel="noopener noreferrer" target="_blank">
+                <span class="mp-footer-contact-icon" aria-hidden="true">✈️</span>
+                <span class="mp-footer-contact-body">
+                  <span class="mp-footer-contact-label" data-i18n="footer.telegram">Telegram</span>
+                  <span class="mp-footer-contact-value">@{{ platform_contact.telegram_label }}</span>
+                </span>
+              </a>
+            {% endif %}
+            {% if platform_contact.whatsapp_href %}
+              <a role="listitem" class="mp-footer-contact-row" href="{{ platform_contact.whatsapp_href }}" rel="noopener noreferrer" target="_blank">
+                <span class="mp-footer-contact-icon" aria-hidden="true">💬</span>
+                <span class="mp-footer-contact-body">
+                  <span class="mp-footer-contact-label" data-i18n="footer.whatsapp">WhatsApp</span>
+                  <span class="mp-footer-contact-value">{{ platform_contact.whatsapp_display }}</span>
+                </span>
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      <div class="mp-premium-card">
+        <h3 data-i18n="sidebar.premiumTitle">Аккаунти Premium</h3>
+        <p data-i18n="sidebar.premiumDesc">Эълонҳоро баланд бардоред ва бештар намоён шавед.</p>
+        <a href="/profile/" data-i18n="sidebar.premiumCta">Бештар</a>
+      </div>
+    </div>
+  </div>
+</aside>

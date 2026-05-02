@@ -2,7 +2,7 @@
 {% block page %}direct_chat{% endblock %}
 {% block body_extra %}data-product-id="{{ product_id|escape }}"{% endblock %}
 {% block content %}
-<div style="max-width:700px;margin:0 auto;padding:16px;height:calc(100vh - 60px);display:flex;flex-direction:column">
+<div style="max-width:700px;margin:0 auto;padding:16px;height:calc(100dvh - var(--topbar-h));display:flex;flex-direction:column">
   <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px 14px 0 0;padding:16px 20px;display:flex;align-items:center;gap:12px">
     <a id="dc-back" href="/" style="color:var(--primary);font-size:20px;text-decoration:none">←</a>
     <div>

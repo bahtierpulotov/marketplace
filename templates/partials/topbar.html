@@ -1,0 +1,45 @@
+{% load static %}
+<header class="mp-topbar" role="banner">
+  <div class="mp-topbar__left">
+    <button type="button"
+      id="nav-hamburger"
+      class="mp-icon-btn hamburger-visible"
+      aria-label="Меню">☰</button>
+    <span class="mp-current-lang" id="mp-lang-indicator" aria-hidden="true">TJ</span>
+  </div>
+  <div class="mp-topbar__right desktop-nav desktop-lang-row" style="align-items:center;gap:8px">
+    <div class="mp-lang-group" role="group" aria-label="Забон">
+      <button type="button" data-lang="tj">TJ</button>
+      <button type="button" data-lang="ru">RU</button>
+      <button type="button" data-lang="en">EN</button>
+      <button type="button" data-lang="uz">UZ</button>
+    </div>
+    <button type="button"
+      id="theme-toggle"
+      class="mp-icon-btn mp-theme-top-mini"
+      title="Роҳнамои ранг"
+      aria-label="Тема">
+      <span id="theme-toggle-icon">🌙</span>
+    </button>
+    <button type="button" class="mp-icon-btn" title="Изҳорҳо" aria-label="Изҳорҳо" style="position:relative">
+      <span>🔔</span>
+      <span style="
+        position:absolute;top:6px;right:6px;width:8px;height:8px;background:#ef4444;
+        border-radius:50%;border:2px solid var(--bg2)"></span>
+    </button>
+    <div id="nav-guest" style="display:flex;gap:8px;align-items:center">
+      <a href="/login/" class="mp-nav-pill" data-i18n="nav.login">Воридшавӣ</a>
+      <a href="/register/" class="mp-btn-gradient" data-i18n="nav.register">Сабт</a>
+    </div>
+    <div id="nav-user" style="display:none;gap:8px;align-items:center">
+      <a href="/chats/" id="nav-chats" style="display:none" class="mp-nav-pill"
+        data-i18n="nav.chats">Паёмҳо</a>
+      <a href="/create/" class="mp-btn-gradient" style="text-decoration:none">+
+        <span data-i18n="nav.sell">Фурӯш</span></a>
+      <a href="/profile/" id="nav-user-label" class="mp-nav-pill" style="text-decoration:none">👤 </a>
+      <button type="button" id="nav-logout"
+        style="padding:8px 12px;border-radius:10px;border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-size:13px;font-weight:600;cursor:pointer"
+        data-i18n="nav.logout">Баромадан</button>
+    </div>
+  </div>
+</header>

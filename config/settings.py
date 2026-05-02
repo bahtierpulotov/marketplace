@@ -1,8 +1,16 @@
 import os
 from pathlib import Path
-from decouple import config
+
+from decouple import Config, RepositoryEnv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Ҳамеша backend/.env — на аз cwd (агар сервер аз папкаи болотар ҷӯш дода шавад, PLATFORM_* гум намешавад)
+_ENV_FILE = BASE_DIR / '.env'
+if _ENV_FILE.is_file():
+    config = Config(RepositoryEnv(str(_ENV_FILE), encoding='utf-8'))
+else:
+    from decouple import config as config
 
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-change-me')
 JWT_SECRET = config('JWT_SECRET', default='jwt-secret-change-me')
@@ -17,7 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders',
-    'apps.accounts',
+    'apps.accounts.apps.AccountsConfig',
     'apps.products',
     'apps.ai_chat',
     'apps.pages',
@@ -48,6 +56,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'config.context_processors.platform_contact',
             ],
         },
     },
@@ -97,6 +106,20 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# Нишон додан дар footer (мустақил аз SMTP)
+def _platform_var(name):
+    v = config(name, default='')
+    if isinstance(v, str):
+        v = v.strip()
+    if v:
+        return v
+    return (os.environ.get(name) or '').strip()
+
+
+PLATFORM_CONTACT_EMAIL = _platform_var('PLATFORM_CONTACT_EMAIL')
+PLATFORM_TELEGRAM = _platform_var('PLATFORM_TELEGRAM')
+PLATFORM_WHATSAPP = _platform_var('PLATFORM_WHATSAPP')
 
 # Groq
 GROQ_API_KEY = config('GROQ_API_KEY', default='')

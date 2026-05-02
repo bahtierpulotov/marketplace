@@ -12,6 +12,7 @@ urlpatterns = [
     path('create/', views.page_create_product, name='create_product'),
     path('product/<uuid:product_id>/', views.page_product_detail, name='product_detail'),
     path('product/<uuid:product_id>/edit/', views.page_product_edit, name='product_edit'),
+    path('chats/', views.page_chats, name='chats'),
     path('chat/<uuid:product_id>/', views.page_direct_chat, name='direct_chat'),
     path('user/<uuid:user_id>/', views.page_public_profile, name='public_profile'),
     re_path(r'^.+$', views.page_not_found),
