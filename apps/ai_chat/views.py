@@ -205,12 +205,19 @@ def my_chats(request):
         last = chat.messages.last()
         unread = chat.messages.filter(is_read=False).exclude(sender=user).count()
         other = chat.product.owner if role == 'buyer' else chat.buyer
+        ou_avatar = (
+            other.avatar.url if getattr(other, 'avatar', None) and other.avatar else None
+        )
         return {
             'chat_id': str(chat.id),
             'buyer_id': str(chat.buyer_id),
             'product_id': str(chat.product_id),
             'product_title': chat.product.title,
-            'other_user': {'id': str(other.id), 'full_name': other.full_name},
+            'other_user': {
+                'id': str(other.id),
+                'full_name': other.full_name or other.email or '',
+                'avatar': ou_avatar,
+            },
             'last_message': last.content[:140] if last else None,
             'updated_at': chat.updated_at.isoformat(),
             'unread': unread,

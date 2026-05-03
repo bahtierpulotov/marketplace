@@ -2,18 +2,27 @@
 {% block page %}direct_chat{% endblock %}
 {% block body_extra %}data-product-id="{{ product_id|escape }}"{% endblock %}
 {% block content %}
-<div style="max-width:700px;margin:0 auto;padding:16px;height:calc(100dvh - var(--topbar-h));display:flex;flex-direction:column">
-  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px 14px 0 0;padding:16px 20px;display:flex;align-items:center;gap:12px">
-    <a id="dc-back" href="/" style="color:var(--primary);font-size:20px;text-decoration:none">←</a>
-    <div>
-      <p id="dc-title" style="margin:0;font-weight:700;color:var(--text);font-size:15px">💬 …</p>
-      <p id="dc-sub" style="margin:0;font-size:12px;color:var(--text2)"></p>
-    </div>
-  </div>
-  <div id="dc-msgs" style="flex:1;overflow-y:auto;background:var(--bg3);padding:16px;display:flex;flex-direction:column;gap:10px"></div>
-  <div style="background:var(--bg2);border:1px solid var(--border);border-top:none;border-radius:0 0 14px 14px;padding:12px;display:flex;gap:8px">
-    <input id="dc-input" placeholder="Паём..." style="flex:1;padding:10px 14px;border-radius:10px;border:1px solid var(--border);font-size:14px;outline:none;background:var(--bg);color:var(--text)">
-    <button type="button" id="dc-send" style="background:var(--primary);color:#fff;border:none;border-radius:10px;padding:10px 18px;font-weight:700;cursor:pointer;font-size:16px">➤</button>
+<div class="dc-wrap">
+  <div class="dc-panel">
+    <header class="dc-header">
+      <a id="dc-back" href="/" class="dc-back" aria-label="Назад">
+        <svg class="dc-back__icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+      </a>
+      <div class="dc-peer">
+        <div id="dc-avatar" class="dc-peer__avatar" aria-hidden="true"></div>
+        <div class="dc-peer__text">
+          <p id="dc-title" class="dc-peer__name">…</p>
+          <p id="dc-sub" class="dc-peer__product"></p>
+        </div>
+      </div>
+    </header>
+    <div id="dc-msgs" class="dc-msgs"></div>
+    <footer class="dc-compose">
+      <input id="dc-input" class="dc-input" type="text" placeholder="Паём..." autocomplete="off" />
+      <button type="button" id="dc-send" class="dc-send" aria-label="Фиристодан">
+        <svg class="dc-send__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+      </button>
+    </footer>
   </div>
 </div>
 {% endblock %}

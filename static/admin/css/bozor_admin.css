@@ -1,0 +1,570 @@
+/* Bozor — дашборди админ: намои воқеӣ / premium-lite */
+
+:root {
+  --bozor-admin-accent: #6d28d9;
+  --bozor-admin-accent-mid: #7c3aed;
+  --bozor-admin-accent-soft: rgba(109, 40, 217, 0.14);
+  --bozor-admin-radius: 16px;
+  --bozor-admin-radius-sm: 11px;
+  --bozor-font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+html[data-theme="dark"] {
+  --bozor-admin-accent: #c4b5fd;
+  --bozor-admin-accent-mid: #a78bfa;
+  --bozor-admin-accent-soft: rgba(167, 139, 250, 0.12);
+  --bozor-dash-bg: radial-gradient(1200px 600px at 10% -10%, rgba(109, 40, 217, 0.18), transparent 55%),
+    radial-gradient(900px 500px at 90% 20%, rgba(59, 130, 246, 0.12), transparent 50%),
+    var(--body-bg, #0c0f14);
+}
+
+html[data-theme="light"],
+:root:not([data-theme]) {
+  --bozor-dash-bg: radial-gradient(1000px 480px at 8% 0%, rgba(124, 58, 237, 0.08), transparent 50%),
+    radial-gradient(800px 400px at 92% 10%, rgba(59, 130, 246, 0.06), transparent 45%),
+    var(--body-bg, #f8fafc);
+}
+
+body {
+  font-family: var(--bozor-font) !important;
+}
+
+/* ── Сарлавҳа ── */
+#header {
+  background: linear-gradient(118deg, #1e1b4b 0%, #3730a3 42%, #5b21b6 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(8px);
+}
+
+html[data-theme="light"] #header,
+:root:not([data-theme]) #header {
+  background: linear-gradient(118deg, #4c1d95 0%, #6d28d9 48%, #7c3aed 100%);
+}
+
+#header a:link,
+#header a:visited {
+  color: #f5f3ff !important;
+}
+
+#user-tools,
+#user-tools button,
+#user-tools a {
+  color: #e9d5ff !important;
+  font-weight: 500;
+  font-size: 0.8125rem;
+}
+
+#user-tools button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+#user-tools strong {
+  color: #fff !important;
+}
+
+.bozor-admin-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none !important;
+}
+
+.bozor-admin-brand__mark {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.06));
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.bozor-admin-brand__mark svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.bozor-admin-brand__text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  line-height: 1.15;
+}
+
+.bozor-admin-brand__title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  color: #fff !important;
+}
+
+.bozor-admin-brand__sub {
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  opacity: 0.88;
+  color: #e9d5ff !important;
+}
+
+#site-name a {
+  text-decoration: none !important;
+}
+
+/* ── Муҳити дашборд ── */
+body.dashboard {
+  background: var(--bozor-dash-bg) !important;
+  background-attachment: fixed !important;
+}
+
+body.dashboard #content {
+  max-width: 1320px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 8px;
+}
+
+/* ── Блоки омор ── */
+.bozor-stats {
+  margin-bottom: 32px;
+}
+
+.bozor-stats__shell {
+  padding: 24px 22px 22px;
+  border-radius: 20px;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  background: linear-gradient(
+    165deg,
+    rgba(255, 255, 255, 0.07) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  backdrop-filter: blur(12px);
+}
+
+html[data-theme="light"] .bozor-stats__shell,
+:root:not([data-theme]) .bozor-stats__shell {
+  background: linear-gradient(165deg, #ffffff 0%, rgba(248, 250, 252, 0.96) 100%);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06), 0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+}
+
+.bozor-stats__intro {
+  margin-bottom: 22px;
+}
+
+.bozor-stats__eyebrow {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bozor-admin-accent-mid);
+  background: var(--bozor-admin-accent-soft);
+  padding: 5px 11px;
+  border-radius: 99px;
+  margin-bottom: 10px;
+  border: 1px solid rgba(124, 58, 237, 0.15);
+}
+
+html[data-theme="dark"] .bozor-stats__eyebrow {
+  border-color: rgba(167, 139, 250, 0.25);
+}
+
+.bozor-stats__title {
+  margin: 0 0 8px;
+  font-size: clamp(1.35rem, 2.5vw, 1.65rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--body-fg, #0f172a);
+  line-height: 1.2;
+}
+
+.bozor-stats__sub {
+  margin: 0;
+  max-width: 52ch;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--body-quiet-color, #64748b);
+  font-weight: 450;
+}
+
+.bozor-stats__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(228px, 1fr));
+  gap: 16px;
+}
+
+@media (min-width: 1200px) {
+  .bozor-stats__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Кортҳо */
+.bozor-stat-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 18px 18px 16px;
+  border-radius: var(--bozor-admin-radius);
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  text-decoration: none !important;
+  color: inherit !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+html[data-theme="light"] .bozor-stat-card,
+:root:not([data-theme]) .bozor-stat-card {
+  background: #fff;
+  border: 1px solid rgba(15, 23, 42, 0.07);
+  box-shadow: 0 2px 12px rgba(15, 23, 42, 0.04);
+}
+
+.bozor-stat-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    500px 120px at 20% -40%,
+    color-mix(in srgb, var(--bozor-card-accent, var(--bozor-admin-accent-mid)) 22%, transparent),
+    transparent 70%
+  );
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+@supports not (color: color-mix(in lch, red, blue)) {
+  .bozor-stat-card::before {
+    background: radial-gradient(500px 120px at 20% -40%, rgba(124, 58, 237, 0.12), transparent 70%);
+  }
+}
+
+.bozor-stat-card:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--bozor-card-accent, var(--bozor-admin-accent-mid)) 35%, transparent);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.14), 0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+}
+
+html[data-theme="light"] .bozor-stat-card:hover,
+:root:not([data-theme]) .bozor-stat-card:hover {
+  box-shadow: 0 16px 36px rgba(91, 33, 182, 0.1);
+}
+
+.bozor-stat-card--static:hover {
+  transform: none;
+  border-color: rgba(148, 163, 184, 0.12);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+html[data-theme="light"] .bozor-stat-card--static:hover,
+:root:not([data-theme]) .bozor-stat-card--static:hover {
+  box-shadow: 0 2px 12px rgba(15, 23, 42, 0.04);
+}
+
+.bozor-stat-card--users {
+  --bozor-card-accent: #6366f1;
+}
+.bozor-stat-card--products {
+  --bozor-card-accent: #8b5cf6;
+}
+.bozor-stat-card--categories {
+  --bozor-card-accent: #a855f7;
+}
+.bozor-stat-card--locations {
+  --bozor-card-accent: #06b6d4;
+}
+.bozor-stat-card--likes {
+  --bozor-card-accent: #ec4899;
+}
+.bozor-stat-card--views {
+  --bozor-card-accent: #14b8a6;
+}
+.bozor-stat-card--chats {
+  --bozor-card-accent: #3b82f6;
+}
+
+.bozor-stat-card__icon {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  margin-bottom: 2px;
+  color: var(--bozor-card-accent, var(--bozor-admin-accent-mid)) !important;
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--bozor-card-accent) 28%, transparent),
+    color-mix(in srgb, var(--bozor-card-accent) 8%, transparent)
+  );
+  border: 1px solid color-mix(in srgb, var(--bozor-card-accent) 22%, transparent);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--bozor-card-accent) 15%, transparent);
+}
+
+@supports not (color: color-mix(in lch, red, blue)) {
+  .bozor-stat-card__icon {
+    background: linear-gradient(145deg, rgba(124, 58, 237, 0.2), rgba(124, 58, 237, 0.06));
+    border: 1px solid rgba(124, 58, 237, 0.2);
+    box-shadow: 0 2px 8px rgba(124, 58, 237, 0.12);
+  }
+  .bozor-stat-card--locations .bozor-stat-card__icon {
+    background: linear-gradient(145deg, rgba(6, 182, 212, 0.25), rgba(6, 182, 212, 0.08));
+    border-color: rgba(6, 182, 212, 0.25);
+    box-shadow: 0 2px 8px rgba(6, 182, 212, 0.15);
+  }
+  .bozor-stat-card--users .bozor-stat-card__icon {
+    background: linear-gradient(145deg, rgba(99, 102, 241, 0.25), rgba(99, 102, 241, 0.08));
+    border-color: rgba(99, 102, 241, 0.22);
+  }
+  .bozor-stat-card--products .bozor-stat-card__icon {
+    background: linear-gradient(145deg, rgba(139, 92, 246, 0.25), rgba(139, 92, 246, 0.08));
+    border-color: rgba(139, 92, 246, 0.22);
+  }
+  .bozor-stat-card--categories .bozor-stat-card__icon {
+    background: linear-gradient(145deg, rgba(168, 85, 247, 0.25), rgba(168, 85, 247, 0.08));
+    border-color: rgba(168, 85, 247, 0.22);
+  }
+  .bozor-stat-card--likes .bozor-stat-card__icon {
+    background: linear-gradient(145deg, rgba(236, 72, 153, 0.25), rgba(236, 72, 153, 0.08));
+    border-color: rgba(236, 72, 153, 0.22);
+  }
+  .bozor-stat-card--views .bozor-stat-card__icon {
+    background: linear-gradient(145deg, rgba(20, 184, 166, 0.25), rgba(20, 184, 166, 0.08));
+    border-color: rgba(20, 184, 166, 0.22);
+  }
+  .bozor-stat-card--chats .bozor-stat-card__icon {
+    background: linear-gradient(145deg, rgba(59, 130, 246, 0.25), rgba(59, 130, 246, 0.08));
+    border-color: rgba(59, 130, 246, 0.22);
+  }
+}
+
+.bozor-stat-card__icon svg {
+  display: block;
+}
+
+.bozor-stat-card__label {
+  position: relative;
+  z-index: 1;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--body-quiet-color, #64748b);
+  opacity: 0.92;
+}
+
+.bozor-stat-card__value {
+  position: relative;
+  z-index: 1;
+  font-size: 1.85rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+  color: var(--body-fg, #0f172a);
+  line-height: 1;
+}
+
+.bozor-stat-card__hint {
+  position: relative;
+  z-index: 1;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--body-quiet-color, #64748b);
+  font-weight: 450;
+}
+
+.bozor-stat-card__badge {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  margin-top: 2px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 99px;
+  background: var(--bozor-admin-accent-soft);
+  color: var(--bozor-admin-accent-mid);
+  border: 1px solid rgba(124, 58, 237, 0.12);
+}
+
+.bozor-stat-card__badge--warn {
+  background: rgba(239, 68, 68, 0.14);
+  color: #f87171;
+  border-color: rgba(239, 68, 68, 0.25);
+}
+
+html[data-theme="light"] .bozor-stat-card__badge--warn {
+  color: #dc2626;
+}
+
+.bozor-stat-card__link {
+  position: relative;
+  z-index: 1;
+  margin-top: 4px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--bozor-admin-accent-mid) !important;
+  text-decoration: none !important;
+}
+
+.bozor-stat-card__link:hover {
+  text-decoration: underline !important;
+}
+
+/* Моделҳо */
+.bozor-models-heading {
+  font-size: 1.08rem;
+  font-weight: 800;
+  margin: 0 0 14px;
+  color: var(--body-fg);
+  letter-spacing: -0.02em;
+}
+
+.module {
+  border-radius: var(--bozor-admin-radius);
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+html[data-theme="light"] .module,
+:root:not([data-theme]) .module {
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+}
+
+.module h2 {
+  font-family: var(--bozor-font);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  font-size: 0.72rem !important;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #0f766e 0%, #115e59 45%, #134e4a 100%) !important;
+  color: #ecfdf5 !important;
+  border: none !important;
+}
+
+html[data-theme="light"] .module h2,
+:root:not([data-theme]) .module h2 {
+  background: linear-gradient(90deg, #0d9488 0%, #0f766e 50%, #115e59 100%) !important;
+}
+
+.module th,
+.module td {
+  font-family: var(--bozor-font);
+}
+
+/* Ҳаракатҳои охирин */
+.bozor-recent-module {
+  border-radius: var(--bozor-admin-radius);
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+html[data-theme="light"] .bozor-recent-module,
+:root:not([data-theme]) .bozor-recent-module {
+  background: #fff;
+  border: 1px solid rgba(15, 23, 42, 0.07);
+}
+
+#content-related .bozor-recent-module h2 {
+  background: linear-gradient(90deg, #4c1d95 0%, #6d28d9 100%) !important;
+  color: #fff !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+  font-size: 0.75rem !important;
+}
+
+#content-related .bozor-recent-module h3 {
+  font-family: var(--bozor-font);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--body-quiet-color);
+}
+
+#content-related .actionlist li {
+  font-family: var(--bozor-font);
+  font-size: 0.8125rem;
+  padding-left: 20px;
+  border-radius: 8px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  margin-bottom: 8px !important;
+}
+
+#content-related .actionlist li:hover {
+  background: rgba(124, 58, 237, 0.06);
+}
+
+/* Воридшавӣ */
+.login #header {
+  justify-content: center;
+}
+
+.login #branding h1 {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.login #container {
+  max-width: 420px;
+  margin: 40px auto;
+}
+
+.login #content-main {
+  border-radius: var(--bozor-admin-radius);
+  padding: 28px !important;
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+}
+
+.login .submit-row input {
+  border-radius: var(--bozor-admin-radius-sm);
+  padding: 11px 22px;
+  font-weight: 700;
+  font-family: var(--bozor-font);
+  background: linear-gradient(135deg, var(--bozor-admin-accent-mid), #5b21b6);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+.login .submit-row input:hover {
+  filter: brightness(1.06);
+}
+
+.login .form-row input {
+  border-radius: var(--bozor-admin-radius-sm);
+  font-family: var(--bozor-font);
+}
+
+/* Ҷадвалҳо */
+#changelist .results {
+  border-radius: var(--bozor-admin-radius-sm);
+  overflow: hidden;
+  font-family: var(--bozor-font);
+}
+
+#changelist table thead th {
+  font-weight: 700;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-family: var(--bozor-font);
+}

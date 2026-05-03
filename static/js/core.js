@@ -329,14 +329,12 @@
     var userM = document.getElementById('nav-user-mobile');
     var acc = getAccess();
     if (!guest || !userEl) return;
-    var navCh = document.getElementById('nav-chats');
     var sideCh = document.getElementById('sidebar-chats');
     if (!acc) {
       guest.style.display = 'flex';
       userEl.style.display = 'none';
       if (guestM) guestM.style.display = 'flex';
       if (userM) userM.style.display = 'none';
-      if (navCh) navCh.style.display = 'none';
       if (sideCh) sideCh.style.display = 'none';
       return;
     }
@@ -350,7 +348,6 @@
         var name = (u.full_name && u.full_name.split(' ')[0]) || 'Profile';
         guest.style.display = 'none';
         userEl.style.display = 'flex';
-        if (navCh) navCh.style.removeProperty('display');
         if (sideCh) sideCh.style.removeProperty('display');
         var label = document.getElementById('nav-user-label');
         if (label) label.textContent = '👤 ' + name;
@@ -365,7 +362,6 @@
         userEl.style.display = 'none';
         if (guestM) guestM.style.display = 'flex';
         if (userM) userM.style.display = 'none';
-        if (navCh) navCh.style.display = 'none';
         if (sideCh) sideCh.style.display = 'none';
       });
   }

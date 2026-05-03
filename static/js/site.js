@@ -11,6 +11,108 @@
     return Number(n).toLocaleString();
   }
 
+  /* Иконкаҳои векторӣ барои метадодаи саҳифаи маҳсулот */
+  function pdMetaSvgEye() {
+    return (
+      '<svg class="pd-meta-svg" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>'
+    );
+  }
+  function pdMetaSvgHeart() {
+    return (
+      '<svg class="pd-meta-svg" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2Z"/></svg>'
+    );
+  }
+  function pdMetaSvgMapPin() {
+    return (
+      '<svg class="pd-meta-svg" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>'
+    );
+  }
+  function pdMetaSvgTag() {
+    return (
+      '<svg class="pd-meta-svg" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2H2v10l9.29 9.29a1 1 0 0 0 1.41 0l6.58-6.58a1 1 0 0 0 0-1.41L12 2Z"/><circle cx="7" cy="7" r="1.5" fill="currentColor" stroke="none"/></svg>'
+    );
+  }
+  function pdMetaSvgClock() {
+    return (
+      '<svg class="pd-meta-svg" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'
+    );
+  }
+
+  function pdLikeSvg(filled) {
+    if (filled) {
+      return (
+        '<svg class="pd-like-svg pd-like-svg--filled" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2Z"/></svg>'
+      );
+    }
+    return (
+      '<svg class="pd-like-svg" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2Z"/></svg>'
+    );
+  }
+
+  function mpUserInitials(name) {
+    if (!name || !String(name).trim()) return '?';
+    var parts = String(name).trim().split(/\s+/);
+    if (parts.length >= 2) {
+      var a = parts[0][0] || '';
+      var b = parts[1][0] || '';
+      return (a + b).toUpperCase();
+    }
+    return String(name).slice(0, 2).toUpperCase();
+  }
+
+  function formatChatListTime(iso) {
+    if (!iso) return '';
+    try {
+      var d = new Date(iso);
+      var now = new Date();
+      if (d.toDateString() === now.toDateString()) {
+        return d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+      }
+      var y = d.getFullYear();
+      var ny = now.getFullYear();
+      var opts = { day: '2-digit', month: 'short' };
+      if (y !== ny) opts.year = 'numeric';
+      return d.toLocaleDateString(undefined, opts);
+    } catch (e) {
+      return '';
+    }
+  }
+
+  function formatMsgTime(iso) {
+    if (!iso) return '';
+    try {
+      var d = new Date(iso);
+      return d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+    } catch (e) {
+      return '';
+    }
+  }
+
+  function chatsEmptyIconSvg() {
+    return (
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>'
+    );
+  }
+
+  function chatRowChevronSvg() {
+    return (
+      '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>'
+    );
+  }
+
+  function inboxAvatarHtml(u) {
+    var name = (u && u.full_name) || '';
+    var url = u && u.avatar;
+    if (url) {
+      return (
+        '<div class="chat-row__avatar chat-row__avatar--img"><img src="' +
+        escapeHtml2(url) +
+        '" alt="" /></div>'
+      );
+    }
+    return '<div class="chat-row__avatar">' + escapeHtml2(mpUserInitials(name)) + '</div>';
+  }
+
   function catPillStyle(active) {
     return (
       'background:' +
@@ -49,32 +151,43 @@
           img.url +
           '" alt="" style="width:100%;height:100%;object-fit:cover"/>'
         : '<span style="font-size:48px">📦</span>';
-      var loc = p.location && p.location.name ? '<p style="margin:4px 0 0;font-size:12px;color:var(--text2)">📍 ' + p.location.name + '</p>' : '';
+      var loc =
+        p.location && p.location.name
+          ? '<p class="product-card__loc"><span class="product-card__loc-inner">' +
+            pdMetaSvgMapPin() +
+            '<span>' +
+            escapeHtml(p.location.name) +
+            '</span></span></p>'
+          : '';
       var cat = p.category
-        ? '<span style="margin-left:auto;background:var(--primary-light);color:var(--primary-text);padding:2px 8px;border-radius:99px;font-size:11px;font-weight:600">' +
-          p.category.icon +
-          ' ' +
-          p.category.name +
-          '</span>'
+        ? '<span class="product-card__cat"><span class="product-card__cat-inner">' +
+          pdMetaSvgTag() +
+          '<span>' +
+          escapeHtml(p.category.name) +
+          '</span></span></span>'
         : '';
       return (
         '<a class="product-card-link" href="/product/' +
         p.id +
-        '/"><div class="product-card"><div style="width:100%;height:190px;background:var(--bg3);display:flex;align-items:center;justify-content:center;overflow:hidden">' +
+        '/"><div class="product-card"><div class="product-card__thumb">' +
         imgHtml +
-        '</div><div style="padding:12px"><p style="margin:0;font-size:14px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' +
+        '</div><div class="product-card__body"><p class="product-card__title">' +
         escapeHtml(p.title) +
-        '</p><p style="margin:6px 0 0;font-size:17px;font-weight:800;color:var(--primary)">' +
+        '</p><p class="product-card__price">' +
         money(p.price) +
         ' ' +
         MP.t('common.currency') +
         '</p>' +
         loc +
-        '<div style="display:flex;gap:10px;margin-top:8px;font-size:11px;color:var(--text3);align-items:center"><span>👁 ' +
+        '<div class="product-card__meta"><span class="product-card__meta-item">' +
+        pdMetaSvgEye() +
+        '<span>' +
         p.views_count +
-        '</span><span>❤️ ' +
+        '</span></span><span class="product-card__meta-item">' +
+        pdMetaSvgHeart() +
+        '<span>' +
         p.likes_count +
-        '</span>' +
+        '</span></span>' +
         cat +
         '</div></div></div></a>'
       );
@@ -92,10 +205,6 @@
     function renderGrid() {
       if (!grid) return;
       grid.innerHTML = products.map(buildCard).join('');
-      grid.style.display = 'grid';
-      grid.style.gridTemplateColumns =
-        'repeat(auto-fill, minmax(min(178px, 100%), 1fr))';
-      grid.style.gap = '16px';
       if (countEl) countEl.textContent = total + ' listings found';
       if (emptyEl) emptyEl.style.display = products.length ? 'none' : 'block';
       if (loadingEl) loadingEl.style.display = loading && products.length === 0 ? 'block' : 'none';
@@ -810,16 +919,17 @@
       : '';
     var likeBlock =
       user && !isOwner
-        ? '<button type="button" id="pd-like" style="width:100%;padding:13px;border-radius:12px;margin-bottom:12px;border:2px solid ' +
+        ? '<button type="button" id="pd-like" class="pd-like-btn" style="width:100%;padding:13px;border-radius:12px;margin-bottom:12px;border:2px solid ' +
           (p.liked_by_me ? '#ef4444' : 'var(--border)') +
           ';background:' +
           (p.liked_by_me ? '#fef2f2' : 'var(--bg3)') +
           ';color:' +
           (p.liked_by_me ? '#ef4444' : 'var(--text2)') +
-          ';font-weight:700;font-size:15px;cursor:pointer">' +
-          (p.liked_by_me ? '❤️ ' : '🤍 ') +
+          ';font-weight:700;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px">' +
+          pdLikeSvg(!!p.liked_by_me) +
+          '<span>' +
           (p.liked_by_me ? MP.t('product.unlike') : MP.t('product.like')) +
-          '</button>'
+          '</span></button>'
         : '';
     var auth = user
       ? ''
@@ -878,11 +988,11 @@
       (cat
         ? '<a href="/?category=' +
           cat.slug +
-          '" style="color:var(--primary);text-decoration:none">' +
-          cat.icon +
-          ' ' +
-          cat.name +
-          '</a><span style="color:var(--text3)">›</span>'
+          '" class="pd-breadcrumb-cat" style="color:var(--primary);text-decoration:none;display:inline-flex;align-items:center;gap:6px">' +
+          pdMetaSvgTag() +
+          '<span>' +
+          escapeHtml2(cat.name) +
+          '</span></a><span style="color:var(--text3)">›</span>'
         : '') +
       '<span style="color:var(--text2);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' +
       p.title +
@@ -897,30 +1007,35 @@
       thumbs +
       '<div style="background:var(--bg2);border-radius:16px;border:1px solid var(--border);padding:24px;margin-bottom:16px"><h1 style="margin:0 0 12px;font-size:24px;font-weight:800;color:var(--text);line-height:1.3">' +
       p.title +
-      '</h1><div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px"><span style="display:inline-flex;align-items:center;gap:4px;background:var(--bg3);border:1px solid var(--border);border-radius:99px;padding:4px 12px;font-size:12px;color:var(--text2)">👁 ' +
+      '</h1><div class="pd-meta-row">' +
+      '<span class="pd-meta-pill">' +
+      pdMetaSvgEye() +
+      '<span>' +
       p.views_count +
       ' ' +
       MP.t('product.views') +
-      '</span><span style="display:inline-flex;align-items:center;gap:4px;background:var(--bg3);border:1px solid var(--border);border-radius:99px;padding:4px 12px;font-size:12px;color:var(--text2)">❤️ ' +
+      '</span></span><span class="pd-meta-pill">' +
+      pdMetaSvgHeart() +
+      '<span>' +
       p.likes_count +
       ' ' +
       MP.t('product.likes') +
-      '</span>' +
+      '</span></span>' +
       (loc && loc.name
-        ? '<span style="display:inline-flex;align-items:center;gap:4px;background:var(--bg3);border:1px solid var(--border);border-radius:99px;padding:4px 12px;font-size:12px;color:var(--text2)">📍 ' +
-          loc.name +
-          '</span>'
+        ? '<span class="pd-meta-pill">' + pdMetaSvgMapPin() + '<span>' + escapeHtml2(loc.name) + '</span></span>'
         : '') +
       (cat
-        ? '<span style="display:inline-flex;align-items:center;gap:4px;background:var(--primary-light);color:var(--primary-text);border:1px solid var(--border);border-radius:99px;padding:4px 12px;font-size:12px;font-weight:600">' +
-          cat.icon +
-          ' ' +
-          cat.name +
-          '</span>'
+        ? '<span class="pd-meta-pill pd-meta-pill--cat">' +
+          pdMetaSvgTag() +
+          '<span>' +
+          escapeHtml2(cat.name) +
+          '</span></span>'
         : '') +
-      '<span style="display:inline-flex;align-items:center;gap:4px;background:var(--bg3);border:1px solid var(--border);border-radius:99px;padding:4px 12px;font-size:12px;color:var(--text2);margin-left:auto">🕐 ' +
+      '<span class="pd-meta-pill pd-meta-pill--date">' +
+      pdMetaSvgClock() +
+      '<span>' +
       new Date(p.created_at).toLocaleDateString('ru-RU') +
-      '</span></div><div style="background:var(--bg3);border-radius:12px;padding:16px;color:var(--text);font-size:15px;line-height:1.7;white-space:pre-wrap">' +
+      '</span></span></div><div style="background:var(--bg3);border-radius:12px;padding:16px;color:var(--text);font-size:15px;line-height:1.7;white-space:pre-wrap">' +
       escapeHtml2(p.description) +
       '</div></div>' +
       ownerActions +
@@ -1149,27 +1264,41 @@
     function render(msgs, meta) {
       if (meta) {
         var ou = meta.other_user || {};
-        document.getElementById('dc-title').textContent =
-          '💬 ' + (ou.full_name ? ou.full_name : '…');
-        document.getElementById('dc-sub').textContent =
-          meta.product && meta.product.title ? meta.product.title : '';
+        var titleEl = document.getElementById('dc-title');
+        var subEl = document.getElementById('dc-sub');
+        var av = document.getElementById('dc-avatar');
+        if (titleEl) titleEl.textContent = ou.full_name ? ou.full_name : '…';
+        if (subEl) subEl.textContent = meta.product && meta.product.title ? meta.product.title : '';
+        if (av) {
+          if (ou.avatar) {
+            av.innerHTML = '<img src="' + escapeHtml2(ou.avatar) + '" alt="" />';
+            av.className = 'dc-peer__avatar dc-peer__avatar--img';
+          } else {
+            av.innerHTML = '';
+            av.textContent = mpUserInitials(ou.full_name || '');
+            av.className = 'dc-peer__avatar';
+          }
+        }
       }
       box.innerHTML = (msgs || [])
         .map(function (m) {
           var mine = m.is_mine;
+          var t = formatMsgTime(m.timestamp);
           return (
-            '<div style="display:flex;justify-content:' +
-            (mine ? 'flex-end' : 'flex-start') +
-            '"><div style="max-width:75%;padding:10px 14px;border-radius:' +
-            (mine ? '16px 16px 4px 16px' : '16px 16px 16px 4px') +
-            ';background:' +
-            (mine ? 'var(--primary)' : 'var(--bg2)') +
-            ';color:' +
-            (mine ? '#fff' : 'var(--text)') +
-            ';font-size:14px;border:' +
-            (mine ? 'none' : '1px solid var(--border)') +
-            '">' +
+            '<div class="dc-msg-row' +
+            (mine ? ' dc-msg-row--mine' : '') +
+            '"><div class="dc-bubble' +
+            (mine ? ' dc-bubble--mine' : ' dc-bubble--other') +
+            '"><span class="dc-bubble__text">' +
             escapeHtml2(m.content) +
+            '</span>' +
+            (t
+              ? '<time class="dc-bubble__time" datetime="' +
+                escapeHtml2(m.timestamp) +
+                '">' +
+                escapeHtml2(t) +
+                '</time>'
+              : '') +
             '</div></div>'
           );
         })
@@ -1191,9 +1320,9 @@
             ? MP.t('chats.buyerRequired')
             : MP.t('common.error');
         box.innerHTML =
-          '<div style="padding:24px;color:var(--text2);text-align:center;line-height:1.55;font-size:14px">' +
+          '<div class="dc-error">' +
           escapeHtml2(msg) +
-          '<br><br><a href="/chats/" style="display:inline-block;margin-top:4px;color:var(--primary);font-weight:800">' +
+          '<br><a href="/chats/">' +
           escapeHtml2(MP.t('chats.goInbox')) +
           '</a></div>';
         if (inp) inp.disabled = true;
@@ -1241,9 +1370,7 @@
       };
     }).catch(function () {
       box.innerHTML =
-        '<div style="padding:24px;color:var(--text2);text-align:center">' +
-        escapeHtml2(MP.t('common.error')) +
-        '</div>';
+        '<div class="dc-error">' + escapeHtml2(MP.t('common.error')) + '</div>';
       if (sendBtn) sendBtn.disabled = true;
       if (inp) inp.disabled = true;
     });
@@ -1268,9 +1395,12 @@
         }
         if (!chats.length) {
           root.innerHTML =
-            '<p style="color:var(--text3);text-align:center;padding:48px 16px;font-size:15px;line-height:1.5">' +
+            '<div class="chats-empty">' +
+            '<div class="chats-empty__icon">' +
+            chatsEmptyIconSvg() +
+            '</div><p class="chats-empty__text">' +
             escapeHtml2(MP.t('chats.empty')) +
-            '</p>';
+            '</p></div>';
           return;
         }
         root.innerHTML = chats
@@ -1279,35 +1409,44 @@
               c.role === 'seller'
                 ? '/chat/' + c.product_id + '/?buyer=' + encodeURIComponent(c.buyer_id)
                 : '/chat/' + c.product_id + '/';
-            var badge =
-              (c.unread || 0) > 0
-                ? '<span style="flex-shrink:0;margin-left:8px;background:#ef4444;color:#fff;font-size:11px;font-weight:800;padding:3px 9px;border-radius:99px">' +
-                  String(c.unread) +
-                  '</span>'
+            var unread = c.unread || 0;
+            var unreadHtml =
+              unread > 0
+                ? '<span class="chat-row__unread">' + (unread > 99 ? '99+' : String(unread)) + '</span>'
                 : '';
-            var roleTag =
-              c.role === 'seller'
-                ? '<span style="font-size:11px;color:var(--accent-blue);font-weight:700;margin-left:6px">' +
-                  '· ' +
-                  escapeHtml2(MP.t('chats.asSeller')) +
-                  '</span>'
-                : '<span style="font-size:11px;color:var(--text3);margin-left:6px">· ' +
-                  escapeHtml2(MP.t('chats.asBuyer')) +
-                  '</span>';
+            var roleLabel =
+              c.role === 'seller' ? MP.t('chats.asSeller') : MP.t('chats.asBuyer');
+            var displayName =
+              c.other_user && c.other_user.full_name ? c.other_user.full_name : '…';
             return (
-              '<a href="' +
+              '<a class="chat-row" href="' +
               href +
-              '" style="display:block;text-decoration:none;margin-bottom:10px;color:inherit"><div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px 18px;display:flex;align-items:flex-start;gap:12px;box-shadow:var(--card-shadow);transition:transform .15s" onmouseover="this.style.transform=\'translateY(-2px)\'" onmouseout="this.style.transform=\'none\'"><div style="flex:1;min-width:0"><p style="margin:0 0 4px;font-weight:800;font-size:15px;color:var(--text);display:flex;flex-wrap:wrap;align-items:center;gap:4px">' +
-              escapeHtml2(c.other_user && c.other_user.full_name ? c.other_user.full_name : '…') +
-              badge +
-              '</p>' +
-              '<p style="margin:0 0 4px;font-size:13px;color:var(--primary);font-weight:600">' +
+              '">' +
+              inboxAvatarHtml(c.other_user) +
+              '<div class="chat-row__body">' +
+              '<div class="chat-row__top">' +
+              '<span class="chat-row__name">' +
+              escapeHtml2(displayName) +
+              '</span>' +
+              unreadHtml +
+              '<span class="chat-row__time">' +
+              escapeHtml2(formatChatListTime(c.updated_at)) +
+              '</span></div>' +
+              '<div class="chat-row__mid">' +
+              '<span class="chat-row__product">' +
               escapeHtml2(c.product_title || '') +
-              roleTag +
-              '</p>' +
-              '<p style="margin:0;font-size:13px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' +
+              '</span>' +
+              '<span class="chat-row__role chat-row__role--' +
+              escapeHtml2(c.role) +
+              '">' +
+              escapeHtml2(roleLabel) +
+              '</span></div>' +
+              '<p class="chat-row__preview">' +
               escapeHtml2(c.last_message || '—') +
-              '</p></div></div></a>'
+              '</p></div>' +
+              '<span class="chat-row__chevron">' +
+              chatRowChevronSvg() +
+              '</span></a>'
             );
           })
           .join('');

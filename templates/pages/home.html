@@ -1,101 +1,55 @@
 {% extends "base.html" %}
 {% block page %}home{% endblock %}
-{% block ai_assistant %}{% endblock %}
 {% block content %}
 <div class="mp-page-pad">
-  <div class="mp-home-columns">
-    <div>
-      <section class="mp-hero">
-        <h1 data-i18n="home.title">Ҳама чизро ёб, ҳама чизро фурӯш</h1>
-        <div class="mp-search-bar-wrap">
-          <input id="home-search" data-i18n-placeholder="home.search" placeholder="Ҷустуҷӯ..."
-            type="search" autocomplete="off">
-          <button type="button" id="home-search-btn" aria-label="Ҷустуҷӯ">🔍</button>
-        </div>
-      </section>
+  <section class="mp-hero">
+    <h1 data-i18n="home.title">Ҳама чизро ёб, ҳама чизро фурӯш</h1>
+    <div class="mp-search-bar-wrap">
+      <input id="home-search" data-i18n-placeholder="home.search" placeholder="Ҷустуҷӯ..."
+        type="search" autocomplete="off">
+      <button type="button" id="home-search-btn" aria-label="Ҷустуҷӯ">🔍</button>
+    </div>
+  </section>
 
-      <div id="category-pills" class="cat-pills-wrap" style="scroll-margin-top:var(--topbar-h)"></div>
-      <div
-        style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-md);padding:14px 16px;margin-bottom:20px;display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;box-shadow:var(--card-shadow)">
-        <div>
-          <label
-            style="display:block;font-size:11px;font-weight:700;color:var(--text2);margin-bottom:4px;text-transform:uppercase"
-            data-i18n="home.minPrice">Min</label>
-          <input id="home-min-price" type="number" placeholder="0"
-            style="padding:8px 12px;border-radius:var(--radius-sm);border:1px solid var(--border);font-size:13px;outline:none;width:132px;color:var(--text);background:var(--bg)">
-        </div>
-        <div>
-          <label
-            style="display:block;font-size:11px;font-weight:700;color:var(--text2);margin-bottom:4px;text-transform:uppercase"
-            data-i18n="home.maxPrice">Max</label>
-          <input id="home-max-price" type="number" placeholder="∞"
-            style="padding:8px 12px;border-radius:var(--radius-sm);border:1px solid var(--border);font-size:13px;outline:none;width:132px;color:var(--text);background:var(--bg)">
-        </div>
-        <div>
-          <label
-            style="display:block;font-size:11px;font-weight:700;color:var(--text2);margin-bottom:4px;text-transform:uppercase"
-            data-i18n="home.location">Location</label>
-          <select id="home-location"
-            style="padding:8px 12px;border-radius:var(--radius-sm);border:1px solid var(--border);font-size:13px;outline:none;min-width:152px;color:var(--text);background:var(--bg);cursor:pointer">
-            <option value="" data-i18n="home.location">—</option>
-          </select>
-        </div>
-        <div>
-          <label
-            style="display:block;font-size:11px;font-weight:700;color:var(--text2);margin-bottom:4px;text-transform:uppercase"
-            data-i18n="home.sort">Sort</label>
-          <select id="home-sort"
-            style="padding:8px 12px;border-radius:var(--radius-sm);border:1px solid var(--border);font-size:13px;outline:none;width:146px;color:var(--text);background:var(--bg2);cursor:pointer">
-            <option value="newest" data-i18n="home.sortNewest">Newest</option>
-            <option value="popular" data-i18n="home.sortPopular">Popular</option>
-            <option value="price_asc" data-i18n="home.sortPriceAsc">Price ↑</option>
-            <option value="price_desc" data-i18n="home.sortPriceDesc">Price ↓</option>
-          </select>
-        </div>
-        <button type="button" id="home-clear-filters"
-          style="display:none;background:#fef2f2;color:#dc2626;border:1px solid #fca5a5;border-radius:var(--radius-sm);padding:8px 12px;font-size:13px;cursor:pointer;align-self:flex-end">✕ Clear</button>
-      </div>
-      <p id="home-result-count" style="color:var(--text2);font-size:13px;margin-bottom:14px;font-weight:500"></p>
-      <div id="home-loading" style="text-align:center;padding:48px;color:var(--text3);display:none"><span
-          data-i18n="common.loading">Loading</span></div>
-      <div id="home-empty" style="text-align:center;padding:52px;color:var(--text3);display:none">
-        <p style="font-size:48px;margin:0 0 12px">📭</p>
-        <p data-i18n="home.noProducts">No products</p>
-      </div>
-      <div id="product-grid"></div>
-      <div style="text-align:center;margin-top:32px;margin-bottom:8px">
-        <button type="button" id="home-load-more"
-          style="display:none;background:linear-gradient(120deg,var(--accent-blue),var(--primary-mid));color:#fff;border:none;border-radius:99px;padding:12px 40px;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 4px 18px rgba(124,58,237,0.35)"
-          data-i18n="home.loadMore">Load more</button>
-      </div>
+  <div id="category-pills" class="cat-pills-wrap" style="scroll-margin-top:var(--topbar-h)"></div>
+  <div class="mp-home-filters">
+    <div class="mp-home-filters__field">
+      <label class="mp-home-filters__label" data-i18n="home.minPrice">Min</label>
+      <input id="home-min-price" class="mp-home-filters__input" type="number" placeholder="0">
     </div>
-    <div class="mp-home-right-aside">
-      <section class="mp-home-ai mp-home-ai--aside" id="mp-home-ai" aria-label="AI ёрдамчи">
-        <div class="mp-home-ai__head">
-          <span class="mp-home-ai__head-icon" aria-hidden="true">🤖</span>
-          <div class="mp-home-ai__head-text">
-            <p class="mp-home-ai__title">AI Ёрдамчи</p>
-            <p class="mp-home-ai__subtitle">Bozor.tj • савол диҳед, ҷавоб мегиред</p>
-          </div>
-        </div>
-        <div id="gen-ai-msgs" class="mp-home-ai__msgs">
-          <div class="mp-home-ai__row mp-home-ai__row--bot">
-            <div class="mp-home-ai__avatar" aria-hidden="true">🤖</div>
-            <div class="mp-home-ai__bubble mp-home-ai__bubble--bot">
-              Салом! Ман AI ёрдамчии Bozor.tj ҳастам 👋<br>
-              Бо кадом маҳсулот ёрдам карда метавонам?
-            </div>
-          </div>
-          
-        </div>
-        <div class="mp-home-ai__footer">
-          <input id="gen-ai-input" class="mp-home-ai__input" type="text" placeholder="Саволи худро нависед..."
-            autocomplete="off"
-            onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();genAISend()}">
-          <button type="button" class="mp-home-ai__send" onclick="genAISend()" aria-label="Фиристодан">➤</button>
-        </div>
-      </section>
+    <div class="mp-home-filters__field">
+      <label class="mp-home-filters__label" data-i18n="home.maxPrice">Max</label>
+      <input id="home-max-price" class="mp-home-filters__input" type="number" placeholder="∞">
     </div>
+    <div class="mp-home-filters__field mp-home-filters__field--full-sm">
+      <label class="mp-home-filters__label" data-i18n="home.location">Location</label>
+      <select id="home-location" class="mp-home-filters__select">
+        <option value="" data-i18n="home.location">—</option>
+      </select>
+    </div>
+    <div class="mp-home-filters__field mp-home-filters__field--full-sm">
+      <label class="mp-home-filters__label" data-i18n="home.sort">Sort</label>
+      <select id="home-sort" class="mp-home-filters__select">
+        <option value="newest" data-i18n="home.sortNewest">Newest</option>
+        <option value="popular" data-i18n="home.sortPopular">Popular</option>
+        <option value="price_asc" data-i18n="home.sortPriceAsc">Price ↑</option>
+        <option value="price_desc" data-i18n="home.sortPriceDesc">Price ↓</option>
+      </select>
+    </div>
+    <button type="button" id="home-clear-filters" class="mp-home-filters__clear" style="display:none">✕ Clear</button>
+  </div>
+  <p id="home-result-count" style="color:var(--text2);font-size:13px;margin-bottom:14px;font-weight:500"></p>
+  <div id="home-loading" style="text-align:center;padding:48px;color:var(--text3);display:none"><span
+      data-i18n="common.loading">Loading</span></div>
+  <div id="home-empty" style="text-align:center;padding:52px;color:var(--text3);display:none">
+    <p style="font-size:48px;margin:0 0 12px">📭</p>
+    <p data-i18n="home.noProducts">No products</p>
+  </div>
+  <div id="product-grid"></div>
+  <div style="text-align:center;margin-top:32px;margin-bottom:8px">
+    <button type="button" id="home-load-more"
+      style="display:none;background:linear-gradient(120deg,var(--accent-blue),var(--primary-mid));color:#fff;border:none;border-radius:99px;padding:12px 40px;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 4px 18px rgba(124,58,237,0.35)"
+      data-i18n="home.loadMore">Load more</button>
   </div>
 </div>
 {% endblock %}

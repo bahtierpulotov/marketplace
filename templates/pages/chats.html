@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% block page %}chats{% endblock %}
 {% block content %}
-<div class="mp-page-pad">
-  <h1 style="margin:0 0 18px;font-size:22px;font-weight:800;color:var(--text)" data-i18n="chats.title">
-    Паёмҳо</h1>
-  <div id="chats-root" style="min-height:240px"></div>
+<div class="mp-page-pad chats-page">
+  <header class="chats-page__head">
+    <h1 class="chats-page__title" data-i18n="chats.title">Паёмҳо</h1>
+  </header>
+  <div id="chats-root" class="chats-list" style="min-height:200px"></div>
 </div>
 {% endblock %}

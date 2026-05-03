@@ -1,0 +1,33 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | Bozor Admin{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">
+  <a href="{% url 'admin:index' %}">
+    <span class="bozor-admin-brand">
+      <span class="bozor-admin-brand__mark" aria-hidden="true">{% include "admin/bozor/icons/logo-mark.html" %}</span>
+      <span class="bozor-admin-brand__text">
+        <span class="bozor-admin-brand__title">Bozor</span>
+        <span class="bozor-admin-brand__sub">панели идоракунӣ</span>
+      </span>
+    </span>
+  </a>
+</h1>
+{% if user.is_anonymous %}
+  {% include "admin/color_theme_toggle.html" %}
+{% endif %}
+{% endblock %}
+
+{% block extrahead %}{{ block.super }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block extrastyle %}{{ block.super }}
+<link rel="stylesheet" href="{% static 'admin/css/bozor_admin.css' %}">
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

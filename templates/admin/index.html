@@ -1,0 +1,107 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" href="{% static "admin/css/dashboard.css" %}">{% endblock %}
+
+{% block coltype %}colMS{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+
+{% block nav-breadcrumbs %}{% endblock %}
+
+{% block nav-sidebar %}{% endblock %}
+
+{% block content %}
+{% if bozor_admin_stats %}
+<section class="bozor-stats" aria-label="Омори платформа">
+  <div class="bozor-stats__shell">
+  <div class="bozor-stats__intro">
+    <span class="bozor-stats__eyebrow">Дашборд</span>
+    <h2 class="bozor-stats__title">{{ index_title|default:"Намои умумӣ" }}</h2>
+    <p class="bozor-stats__sub">Омори воқеии платформа — корбарон, эълонҳо, ҷойҳо, чат.</p>
+  </div>
+  <div class="bozor-stats__grid">
+    <a class="bozor-stat-card bozor-stat-card--users" href="{% url 'admin:accounts_user_changelist' %}">
+      <span class="bozor-stat-card__icon" aria-hidden="true">{% include "admin/bozor/icons/users.html" %}</span>
+      <span class="bozor-stat-card__label">Корбарон</span>
+      <strong class="bozor-stat-card__value">{{ bozor_admin_stats.users_total }}</strong>
+      <span class="bozor-stat-card__hint">+{{ bozor_admin_stats.users_new_week }} нав дар 7 рӯз · {{ bozor_admin_stats.users_verified }} тасдиқшуда</span>
+      {% if bozor_admin_stats.users_banned %}
+      <span class="bozor-stat-card__badge bozor-stat-card__badge--warn">{{ bozor_admin_stats.users_banned }} мамнӯъ</span>
+      {% endif %}
+    </a>
+    <a class="bozor-stat-card bozor-stat-card--products" href="{% url 'admin:products_product_changelist' %}">
+      <span class="bozor-stat-card__icon" aria-hidden="true">{% include "admin/bozor/icons/box.html" %}</span>
+      <span class="bozor-stat-card__label">Эълонҳо</span>
+      <strong class="bozor-stat-card__value">{{ bozor_admin_stats.products_active }}</strong>
+      <span class="bozor-stat-card__hint">фаъол · {{ bozor_admin_stats.products_inactive }} ғайрифаъол · +{{ bozor_admin_stats.products_new_week }} дар 7 рӯз</span>
+    </a>
+    <a class="bozor-stat-card bozor-stat-card--categories" href="{% url 'admin:products_category_changelist' %}">
+      <span class="bozor-stat-card__icon" aria-hidden="true">{% include "admin/bozor/icons/tag.html" %}</span>
+      <span class="bozor-stat-card__label">Категорияҳо</span>
+      <strong class="bozor-stat-card__value">{{ bozor_admin_stats.categories }}</strong>
+    </a>
+    <a class="bozor-stat-card bozor-stat-card--locations" href="{% url 'admin:products_location_changelist' %}">
+      <span class="bozor-stat-card__icon" aria-hidden="true">{% include "admin/bozor/icons/globe.html" %}</span>
+      <span class="bozor-stat-card__label">Ҷойҳо</span>
+      <strong class="bozor-stat-card__value">{{ bozor_admin_stats.locations }}</strong>
+    </a>
+    <a class="bozor-stat-card bozor-stat-card--likes" href="{% url 'admin:products_like_changelist' %}">
+      <span class="bozor-stat-card__icon" aria-hidden="true">{% include "admin/bozor/icons/heart.html" %}</span>
+      <span class="bozor-stat-card__label">Лайкҳо</span>
+      <strong class="bozor-stat-card__value">{{ bozor_admin_stats.likes }}</strong>
+    </a>
+    <div class="bozor-stat-card bozor-stat-card--views bozor-stat-card--static">
+      <span class="bozor-stat-card__icon" aria-hidden="true">{% include "admin/bozor/icons/eye.html" %}</span>
+      <span class="bozor-stat-card__label">Дидашавиҳо (ҷамъ)</span>
+      <strong class="bozor-stat-card__value">{{ bozor_admin_stats.views_sum }}</strong>
+      <a class="bozor-stat-card__link" href="{% url 'admin:products_product_changelist' %}">Ба рӯйхати эълонҳо →</a>
+    </div>
+    <a class="bozor-stat-card bozor-stat-card--chats" href="{% url 'admin:ai_chat_directchat_changelist' %}">
+      <span class="bozor-stat-card__icon" aria-hidden="true">{% include "admin/bozor/icons/messages.html" %}</span>
+      <span class="bozor-stat-card__label">Чатҳои мустақим</span>
+      <strong class="bozor-stat-card__value">{{ bozor_admin_stats.direct_chats }}</strong>
+      <span class="bozor-stat-card__hint">{{ bozor_admin_stats.direct_messages }} паём · барои тафсил пахш кунед</span>
+    </a>
+  </div>
+  </div>
+</section>
+{% endif %}
+
+<div id="content-main">
+  <h2 class="bozor-models-heading">Моделҳо</h2>
+  {% include "admin/app_list.html" with app_list=app_list show_changelinks=True %}
+</div>
+{% endblock %}
+
+{% block sidebar %}
+<div id="content-related">
+    <div class="module bozor-recent-module" id="recent-actions-module">
+        <h2>{% translate 'Recent actions' %}</h2>
+        <h3>{% translate 'My actions' %}</h3>
+            {% load log %}
+            {% get_admin_log 10 as admin_log for_user user %}
+            {% if not admin_log %}
+            <p>{% translate 'None available' %}</p>
+            {% else %}
+            <ul class="actionlist">
+            {% for entry in admin_log %}
+            <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink{% endif %}">
+                {% if entry.is_deletion or not entry.get_admin_url %}
+                    {{ entry.object_repr }}
+                {% else %}
+                    <a href="{{ entry.get_admin_url }}">{{ entry.object_repr }}</a>
+                {% endif %}
+                <br>
+                {% if entry.content_type %}
+                    <span class="mini quiet">{% filter capfirst %}{{ entry.content_type.name }}{% endfilter %}</span>
+                {% else %}
+                    <span class="mini quiet">{% translate 'Unknown content' %}</span>
+                {% endif %}
+            </li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+    </div>
+</div>
+{% endblock %}

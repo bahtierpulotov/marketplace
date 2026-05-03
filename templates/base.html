@@ -4,12 +4,12 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>{% block title %}Bozor{% endblock %}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{% static 'css/app.css' %}?v=bozor-assets-2026050223">
+  <link rel="stylesheet" href="{% static 'css/app.css' %}?v=bozor-assets-202605037">
   {% block extra_css %}{% endblock %}
 </head>
 
@@ -26,108 +26,49 @@
     </div>
   </div>
   <!-- sync revision with I18N_ASSET_VER inside static/js/core.js -->
-  <script src="{% static 'js/core.js' %}?v=bozor-assets-2026050223"></script>
-  <script src="{% static 'js/site.js' %}?v=bozor-assets-2026050223"></script>
+  <script src="{% static 'js/core.js' %}?v=bozor-assets-202605032"></script>
+  <script src="{% static 'js/site.js' %}?v=bozor-assets-202605037"></script>
   {% block extra_js %}{% endblock %}
 
-  AI ёрдамчӣ дар home дар блоки асосии саҳифа (content) ҷойгир аст
   {% block ai_assistant %}
-  <div id="gen-ai-btn" onclick="toggleGenAI()" title="AI Ёрдамчи" style="
-    position:fixed; bottom:28px; right:28px; z-index:1000;
-    width:56px; height:56px; border-radius:50%;
-    background:linear-gradient(135deg,#6366f1,#8b5cf6);
-    display:flex; align-items:center; justify-content:center;
-    font-size:26px; cursor:pointer;
-    box-shadow:0 4px 20px rgba(99,102,241,0.5);
-    transition:transform 0.2s;
-  " onmouseenter="this.style.transform='scale(1.1)'"
-     onmouseleave="this.style.transform='scale(1)'">
-    🤖
-  </div>
-
-  <div id="gen-ai-panel" style="
-    position:fixed; bottom:96px; right:28px; z-index:999;
-    width:360px; max-height:520px;
-    background:var(--bg2); border:1px solid var(--border);
-    border-radius:20px; display:none; flex-direction:column;
-    box-shadow:0 8px 40px rgba(0,0,0,0.25);
-    overflow:hidden;
-  ">
-    <!-- Header -->
-    <div style="
-      background:linear-gradient(135deg,#6366f1,#8b5cf6);
-      padding:16px 20px; display:flex; align-items:center; gap:10px;
-    ">
-      <span style="font-size:22px">🤖</span>
-      <div style="flex:1">
-        <p style="margin:0;font-weight:700;color:#fff;font-size:15px">AI Ёрдамчи</p>
-        <p style="margin:0;font-size:12px;color:rgba(255,255,255,0.7)">Bozor.tj • ҳамеша дар хидмат</p>
+  <div id="gen-ai-launcher" class="gen-ai-launcher" aria-live="polite">
+    <div id="gen-ai-panel" class="gen-ai-panel" role="dialog" aria-modal="false" aria-labelledby="gen-ai-panel-title" style="display:none">
+      <div class="gen-ai-panel__head">
+        <span class="gen-ai-panel__head-icon" aria-hidden="true">🤖</span>
+        <div class="gen-ai-panel__head-text">
+          <p id="gen-ai-panel-title" class="gen-ai-panel__title">AI Ёрдамчи</p>
+          <p class="gen-ai-panel__subtitle">Bozor.tj • ҳамеша дар хидмат</p>
+        </div>
+        <button type="button" class="gen-ai-panel__close" onclick="toggleGenAI()" aria-label="Пӯшидан">✕</button>
       </div>
-      <button onclick="toggleGenAI()" style="
-        background:rgba(255,255,255,0.2); border:none; border-radius:50%;
-        width:28px; height:28px; color:#fff; cursor:pointer; font-size:14px;
-      ">✕</button>
-    </div>
-
-    <!-- Messages -->
-    <div id="gen-ai-msgs" style="
-      flex:1; overflow-y:auto; padding:16px;
-      display:flex; flex-direction:column; gap:10px;
-      min-height:200px; max-height:320px;
-    ">
-      <!-- Welcome message -->
-      <div style="display:flex;gap:8px;align-items:flex-end">
-        <div style="
-          width:28px;height:28px;border-radius:50%;
-          background:var(--primary-light);
-          display:flex;align-items:center;justify-content:center;
-          font-size:14px;flex-shrink:0;
-        ">🤖</div>
-        <div style="
-          background:var(--bg3);border:1px solid var(--border);
-          border-radius:16px 16px 16px 4px;
-          padding:10px 14px;font-size:14px;
-          color:var(--text);line-height:1.5;max-width:85%;
-        ">
-          Салом! Ман AI ёрдамчии Bozor.tj ҳастам 👋<br>
-          Бо кадом маҳсулот ёрдам карда метавонам?
+      <div id="gen-ai-msgs" class="gen-ai-panel__msgs">
+        <div class="gen-ai-msg gen-ai-msg--bot">
+          <span class="gen-ai-msg__avatar" aria-hidden="true">🤖</span>
+          <div class="gen-ai-msg__bubble gen-ai-msg__bubble--bot">
+            Салом! Ман AI ёрдамчии Bozor.tj ҳастам 👋<br>
+            Бо кадом маҳсулот ёрдам карда метавонам?
+          </div>
+        </div>
+        <div class="gen-ai-suggestions" id="gen-ai-suggestions">
+          <button type="button" class="gen-ai-chip" onclick="genAISend(this.textContent)">💰 2000 сомон дорам, чӣ харам?</button>
+          <button type="button" class="gen-ai-chip" onclick="genAISend(this.textContent)">📱 Телефони хуб тавсия деҳ</button>
+          <button type="button" class="gen-ai-chip" onclick="genAISend(this.textContent)">🔍 Арзонтарин маҳсулот?</button>
         </div>
       </div>
-
-      <!-- Suggestions -->
-      <div style="padding-left:36px;display:flex;flex-wrap:wrap;gap:6px" id="gen-ai-suggestions">
-        <button onclick="genAISend(this.textContent)" style="
-          background:var(--primary-light);color:var(--primary-text);
-          border:1px solid var(--border);border-radius:99px;
-          padding:5px 12px;font-size:12px;cursor:pointer;
-        ">💰 2000 сомон дорам, чӣ харам?</button>
-        <button onclick="genAISend(this.textContent)" style="
-          background:var(--primary-light);color:var(--primary-text);
-          border:1px solid var(--border);border-radius:99px;
-          padding:5px 12px;font-size:12px;cursor:pointer;
-        ">📱 Телефони хуб тавсия деҳ</button>
-        <button onclick="genAISend(this.textContent)" style="
-          background:var(--primary-light);color:var(--primary-text);
-          border:1px solid var(--border);border-radius:99px;
-          padding:5px 12px;font-size:12px;cursor:pointer;
-        ">🔍 Арзонтарин маҳсулот?</button>
+      <div class="gen-ai-panel__foot">
+        <input id="gen-ai-input" class="gen-ai-panel__input" type="text" placeholder="Саволи худро нависед..."
+          autocomplete="off"
+          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();genAISend()}">
+        <button type="button" class="gen-ai-panel__send" onclick="genAISend()" aria-label="Фиристодан">➤</button>
       </div>
     </div>
-
-    <!-- Input -->
-    <div style="padding:12px;border-top:1px solid var(--border);display:flex;gap:8px">
-      <input id="gen-ai-input" placeholder="Саволи худро нависед..."
-        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();genAISend()}"
-        style="
-          flex:1;padding:10px 14px;border-radius:10px;
-          border:1px solid var(--border);font-size:14px;
-          outline:none;background:var(--bg);color:var(--text);
-        "/>
-      <button onclick="genAISend()" style="
-        background:var(--primary);color:#fff;border:none;
-        border-radius:10px;padding:10px 16px;
-        font-size:16px;cursor:pointer;
-      ">➤</button>
+    <div class="gen-ai-launcher__stack">
+      <p class="gen-ai-launcher__hint"><span class="gen-ai-launcher__wave" aria-hidden="true">👋</span> Мо ин ҷо ҳастем!</p>
+      <button type="button" id="gen-ai-btn" class="gen-ai-fab" onclick="toggleGenAI()"
+        title="AI Ёрдамчи" aria-label="Кушодани AI ёрдамчи" aria-expanded="false" aria-controls="gen-ai-panel">
+        <span class="gen-ai-fab__icon" aria-hidden="true">💬</span>
+        <span class="gen-ai-fab__pulse" aria-hidden="true"></span>
+      </button>
     </div>
   </div>
   {% endblock %}
@@ -139,9 +80,14 @@
 
     function toggleGenAI() {
       var panel = document.getElementById('gen-ai-panel');
+      var launcher = document.getElementById('gen-ai-launcher');
+      var btn = document.getElementById('gen-ai-btn');
       if (!panel) return;
       genAIOpen = !genAIOpen;
       panel.style.display = genAIOpen ? 'flex' : 'none';
+      panel.setAttribute('aria-modal', genAIOpen ? 'true' : 'false');
+      if (launcher) launcher.classList.toggle('gen-ai-launcher--open', genAIOpen);
+      if (btn) btn.setAttribute('aria-expanded', genAIOpen ? 'true' : 'false');
       var inp = document.getElementById('gen-ai-input');
       if (genAIOpen && inp) inp.focus();
     }
@@ -213,13 +159,6 @@
       .finally(function() { genAILoading = false; });
     }
   </script>
-
-  <style>
-    @keyframes bounce {
-      0%, 60%, 100% { transform: translateY(0); }
-      30% { transform: translateY(-6px); }
-    }
-  </style>
 
 </body>
 

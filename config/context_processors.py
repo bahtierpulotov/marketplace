@@ -3,6 +3,23 @@ import re
 from django.conf import settings
 
 
+def admin_dashboard(request):
+    """Омор барои дашборди /admin/ — танҳо барои кормандон."""
+    user = getattr(request, 'user', None)
+    if user is None or not user.is_authenticated or not user.is_staff:
+        return {}
+    match = getattr(request, 'resolver_match', None)
+    if (
+        match is None
+        or getattr(match, 'namespace', None) != 'admin'
+        or match.url_name != 'index'
+    ):
+        return {}
+    from config.admin_stats import get_admin_dashboard_stats
+
+    return {'bozor_admin_stats': get_admin_dashboard_stats()}
+
+
 def _telegram_href(raw):
     raw = (raw or '').strip()
     if not raw:
