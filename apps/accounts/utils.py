@@ -83,4 +83,6 @@ def user_to_dict(user, include_private=False):
     }
     if not include_private:
         data.pop('phone')
+    else:
+        data['is_staff'] = bool(user.is_staff)
     return data

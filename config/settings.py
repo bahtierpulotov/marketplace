@@ -125,8 +125,12 @@ PLATFORM_WHATSAPP = _platform_var('PLATFORM_WHATSAPP')
 # Groq
 GROQ_API_KEY = config('GROQ_API_KEY', default='')
 
-# CSRF exempt for API (handled by JWT)
-CSRF_TRUSTED_ORIGINS = config(
+# POST ба саҳифаҳои Django (логин, админ): бояд манбаи браузер дар рӯйхат бошад
+_cors_origins = config(
     'CORS_ALLOWED_ORIGINS',
-    default='http://localhost:5173,http://localhost:3000'
+    default='http://localhost:5173,http://localhost:3000',
+)
+CSRF_TRUSTED_ORIGINS = config(
+    'CSRF_TRUSTED_ORIGINS',
+    default=_cors_origins,
 ).split(',')

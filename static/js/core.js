@@ -22,10 +22,13 @@
    Ҳангом тағйир дар JSON ё сохтори калидҳо инро нав кунед
    ҳамчун версия бо base.html (?v=bozor-assets-…) яксон нигоҳ доред.
    */
-  var I18N_ASSET_VER = 'bozor-assets-2026050223';
+  var I18N_ASSET_VER = 'bozor-assets-202605038';
 
   var UI_FALLBACK_LANG = {
     en: {
+      nav: {
+        siteAdmin: 'Admin',
+      },
       sidebar: {
         menu: 'Menu',
         home: 'Home',
@@ -39,6 +42,7 @@
         premiumDesc: 'Boost your listings so more buyers notice you.',
         premiumCta: 'See how',
         admin: 'Admin',
+        platformContact: 'Contact',
         adminPanelAria: 'Platform contact details',
       },
       trust: {
@@ -56,6 +60,9 @@
       },
     },
     tj: {
+      nav: {
+        siteAdmin: 'Идора',
+      },
       sidebar: {
         menu: 'Меню',
         home: 'Ҳона',
@@ -69,6 +76,7 @@
         premiumDesc: 'Эълонҳоро баланд бардоред ва бештар дида шавед.',
         premiumCta: 'Бештар хонед',
         admin: 'Админ',
+        platformContact: 'Тамос',
         adminPanelAria: 'Маълумоти тамос бо платформа',
       },
       trust: {
@@ -86,6 +94,9 @@
       },
     },
     ru: {
+      nav: {
+        siteAdmin: 'Панель',
+      },
       sidebar: {
         menu: 'Меню',
         home: 'Главная',
@@ -99,6 +110,7 @@
         premiumDesc: 'Поднимите объявления и получите больше просмотров.',
         premiumCta: 'Подробнее',
         admin: 'Админ',
+        platformContact: 'Связь',
         adminPanelAria: 'Контакты владельца платформы',
       },
       trust: {
@@ -116,6 +128,9 @@
       },
     },
     uz: {
+      nav: {
+        siteAdmin: 'Boshqaruv',
+      },
       sidebar: {
         menu: 'Menyu',
         home: 'Bosh sahifa',
@@ -129,6 +144,7 @@
         premiumDesc: "E'lonni ko'tarib, ko'proq e'tibor oling.",
         premiumCta: 'Batafsil',
         admin: 'Admin',
+        platformContact: 'Aloqa',
         adminPanelAria: 'Platforma bilan aloqa',
       },
       trust: {
@@ -150,7 +166,7 @@
   function mergeUiBundlesFromFallback(j, langCode) {
     if (!j || typeof j !== 'object') return;
     var fb = UI_FALLBACK_LANG[langCode] || UI_FALLBACK_LANG.en;
-    ['sidebar', 'trust', 'footer'].forEach(function (key) {
+    ['sidebar', 'trust', 'footer', 'nav'].forEach(function (key) {
       if (!fb[key]) return;
       var loaded = j[key];
       var cur = loaded && typeof loaded === 'object' ? loaded : {};
@@ -331,12 +347,14 @@
     if (!guest || !userEl) return;
     var sideCh = document.getElementById('sidebar-chats');
     if (!acc) {
-      guest.style.display = 'flex';
-      userEl.style.display = 'none';
-      if (guestM) guestM.style.display = 'flex';
-      if (userM) userM.style.display = 'none';
-      if (sideCh) sideCh.style.display = 'none';
-      return;
+        guest.style.display = 'flex';
+        userEl.style.display = 'none';
+        var adm0 = document.getElementById('nav-django-admin');
+        if (adm0) adm0.style.display = 'none';
+        if (guestM) guestM.style.display = 'flex';
+        if (userM) userM.style.display = 'none';
+        if (sideCh) sideCh.style.display = 'none';
+        return;
     }
     apiFetch('/user/me/')
       .then(function (r) {
@@ -351,6 +369,15 @@
         if (sideCh) sideCh.style.removeProperty('display');
         var label = document.getElementById('nav-user-label');
         if (label) label.textContent = '👤 ' + name;
+        var adm = document.getElementById('nav-django-admin');
+        if (adm) {
+          if (u.is_staff) {
+            adm.style.display = 'inline-flex';
+            adm.textContent = t('nav.siteAdmin');
+          } else {
+            adm.style.display = 'none';
+          }
+        }
         if (guestM) guestM.style.display = 'none';
         if (userM) userM.style.display = 'flex';
         var lm = document.getElementById('nav-user-label-mobile');
@@ -363,6 +390,8 @@
         if (guestM) guestM.style.display = 'flex';
         if (userM) userM.style.display = 'none';
         if (sideCh) sideCh.style.display = 'none';
+        var adm1 = document.getElementById('nav-django-admin');
+        if (adm1) adm1.style.display = 'none';
       });
   }
 

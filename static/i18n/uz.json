@@ -7,7 +7,8 @@
     "profile": "Profil",
     "logout": "Chiqish",
     "myListings": "Mening e'lonlarim",
-    "chats": "Xabarlar"
+    "chats": "Xabarlar",
+    "siteAdmin": "Boshqaruv"
   },
   "home": {
     "title": "Hamma narsani top, hamma narsani sot",
@@ -113,6 +114,7 @@
     "premiumDesc": "E'loningizni koʻtarib, koʻproq e'tiborga éga boʻling.",
     "premiumCta": "Batafsil",
     "admin": "Admin",
+    "platformContact": "Aloqa",
     "adminPanelAria": "Platforma bilan aloqa"
   },
   "trust": {

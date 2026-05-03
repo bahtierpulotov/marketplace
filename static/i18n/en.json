@@ -7,7 +7,8 @@
     "profile": "Profile",
     "logout": "Logout",
     "myListings": "My Listings",
-    "chats": "Messages"
+    "chats": "Messages",
+    "siteAdmin": "Admin"
   },
   "home": {
     "title": "Find anything, sell anything",
@@ -113,6 +114,7 @@
     "premiumDesc": "Boost your listings so more buyers notice you.",
     "premiumCta": "See how",
     "admin": "Admin",
+    "platformContact": "Contact",
     "adminPanelAria": "Platform contact details"
   },
   "trust": {
