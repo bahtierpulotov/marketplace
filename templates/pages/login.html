@@ -9,9 +9,9 @@
     </div>
     <div id="login-error" style="display:none;background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:10px 14px;color:#dc2626;font-size:14px;margin-bottom:16px"></div>
     <label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px" data-i18n="auth.email">Email</label>
-    <input id="login-email" type="email" style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);font-size:15px;margin-bottom:16px;outline:none;box-sizing:border-box;background:var(--bg);color:var(--text)" placeholder="you@example.com" autofocus>
+    <input id="login-email" type="email" placeholder="you@example.com" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);font-size:15px;margin-bottom:16px;outline:none;box-sizing:border-box;background:var(--bg);color:var(--text)" autofocus>
     <label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px" data-i18n="auth.password">Password</label>
-    <input id="login-password" type="password" style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);font-size:15px;margin-bottom:16px;outline:none;box-sizing:border-box;background:var(--bg);color:var(--text)" placeholder="••••••••">
+    <input id="login-password" type="password" placeholder="••••••••" minlength="8" style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);font-size:15px;margin-bottom:16px;outline:none;box-sizing:border-box;background:var(--bg);color:var(--text)">
     <div style="text-align:right;margin-bottom:20px">
       <a href="/forgot-password/" style="font-size:13px;color:#6366f1" data-i18n="auth.forgotPassword">Forgot</a>
     </div>

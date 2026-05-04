@@ -1394,10 +1394,6 @@ input, textarea, select { font-family: inherit; }
   .gen-ai-panel__msgs {
     max-height: min(42vh, 300px);
   }
-
-  .mp-topbar-notif-sm-hide {
-    display: none !important;
-  }
 }
 
 @media (max-width: 420px) {

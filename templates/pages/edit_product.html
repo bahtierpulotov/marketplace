@@ -7,12 +7,12 @@
   <h1 style="margin:16px 0 24px;font-size:22px;font-weight:800;color:var(--text)">✏️ Таҳрири эълон</h1>
   <div style="background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:24px">
     <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px">Title</label>
-    <input id="ed-title" style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);margin-bottom:14px;box-sizing:border-box;background:var(--bg);color:var(--text)">
+    <input id="ed-title" placeholder="Enter product title" maxlength="200" style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);margin-bottom:14px;box-sizing:border-box;background:var(--bg);color:var(--text)">
     <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px">Description</label>
-    <textarea id="ed-desc" style="width:100%;min-height:100px;padding:11px 14px;border-radius:10px;border:1px solid var(--border);margin-bottom:14px;box-sizing:border-box;background:var(--bg);color:var(--text)"></textarea>
+    <textarea id="ed-desc" placeholder="Describe your product in detail" style="width:100%;min-height:100px;padding:11px 14px;border-radius:10px;border:1px solid var(--border);margin-bottom:14px;box-sizing:border-box;background:var(--bg);color:var(--text)"></textarea>
     <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px">Price</label>
-    <input id="ed-price" type="text" style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);margin-bottom:14px;box-sizing:border-box;background:var(--bg);color:var(--text)">
-    <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px">Category</label>
+    <input id="ed-price" type="number" placeholder="0.00" min="0" step="0.01" style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);margin-bottom:14px;box-sizing:border-box;background:var(--bg);color:var(--text)\">
+    <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px\">Category</label>
     <select id="ed-category" style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);margin-bottom:14px;background:var(--bg2);color:var(--text)"></select>
     <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px">Location</label>
     <select id="ed-location" style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);margin-bottom:14px;background:var(--bg2);color:var(--text)"></select>

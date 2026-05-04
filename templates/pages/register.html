@@ -9,15 +9,15 @@
     </div>
     <div id="reg-error" style="display:none;background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:10px 14px;color:#dc2626;font-size:14px;margin-bottom:16px"></div>
     <label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px" data-i18n="auth.fullName">Full name</label>
-    <input id="reg-fullname" style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);font-size:15px;margin-bottom:14px;outline:none;box-sizing:border-box;background:var(--bg);color:var(--text)">
+    <input id="reg-fullname" placeholder="Enter your full name" style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);font-size:15px;margin-bottom:14px;outline:none;box-sizing:border-box;background:var(--bg);color:var(--text)">
     <label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px">📞 Phone</label>
-    <input id="reg-phone" type="tel" style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);font-size:15px;margin-bottom:14px;outline:none;box-sizing:border-box;background:var(--bg);color:var(--text)">
+    <input id="reg-phone" type="tel" placeholder="+9928 XX XX XX XX" pattern="[+0-9 -()]{8,}" style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);font-size:15px;margin-bottom:14px;outline:none;box-sizing:border-box;background:var(--bg);color:var(--text)">
     <label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px" data-i18n="auth.email">Email</label>
-    <input id="reg-email" type="email" style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);font-size:15px;margin-bottom:14px;outline:none;box-sizing:border-box;background:var(--bg);color:var(--text)">
+    <input id="reg-email" type="email" placeholder="you@example.com" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);font-size:15px;margin-bottom:14px;outline:none;box-sizing:border-box;background:var(--bg);color:var(--text)">
     <label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px" data-i18n="auth.password">Password</label>
-    <input id="reg-password" type="password" style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);font-size:15px;margin-bottom:14px;outline:none;box-sizing:border-box;background:var(--bg);color:var(--text)">
+    <input id="reg-password" type="password" placeholder="Enter password (min 8 characters)" minlength="8" style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);font-size:15px;margin-bottom:14px;outline:none;box-sizing:border-box;background:var(--bg);color:var(--text)">
     <label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px">Confirm</label>
-    <input id="reg-confirm" type="password" style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);font-size:15px;margin-bottom:14px;outline:none;box-sizing:border-box;background:var(--bg);color:var(--text)">
+    <input id="reg-confirm" type="password" placeholder="Confirm your password" minlength="8" style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);font-size:15px;margin-bottom:14px;outline:none;box-sizing:border-box;background:var(--bg);color:var(--text)">
     <button type="button" id="reg-submit" style="width:100%;padding:13px;border-radius:10px;border:none;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer" data-i18n="nav.register">Register</button>
     <p style="text-align:center;margin-top:16px;font-size:14px;color:var(--text2)">
       <span data-i18n="auth.haveAccount">Have account</span>

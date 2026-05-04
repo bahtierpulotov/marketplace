@@ -277,8 +277,6 @@ def product_detail(request, product_id):
     return JsonResponse({'error': 'Method not allowed'}, status=405)
 
 
-# ─── UPLOAD IMAGES ────────────────────────────────────────────────────────────
-
 @csrf_exempt
 @require_auth
 def upload_images(request, product_id):

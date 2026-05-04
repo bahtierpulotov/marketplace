@@ -36,36 +36,36 @@
       <div class="gen-ai-panel__head">
         <span class="gen-ai-panel__head-icon" aria-hidden="true">🤖</span>
         <div class="gen-ai-panel__head-text">
-          <p id="gen-ai-panel-title" class="gen-ai-panel__title">AI Ёрдамчи</p>
-          <p class="gen-ai-panel__subtitle">Bozor.tj • ҳамеша дар хидмат</p>
+          <p id="gen-ai-panel-title" class="gen-ai-panel__title">AI Помощник</p>
+          <p class="gen-ai-panel__subtitle">Bozor.tj • всегда в вашей услуге</p>
         </div>
-        <button type="button" class="gen-ai-panel__close" onclick="toggleGenAI()" aria-label="Пӯшидан">✕</button>
+        <button type="button" class="gen-ai-panel__close" onclick="toggleGenAI()" aria-label="Закрыть">✕</button>
       </div>
       <div id="gen-ai-msgs" class="gen-ai-panel__msgs">
         <div class="gen-ai-msg gen-ai-msg--bot">
           <span class="gen-ai-msg__avatar" aria-hidden="true">🤖</span>
           <div class="gen-ai-msg__bubble gen-ai-msg__bubble--bot">
-            Салом! Ман AI ёрдамчии Bozor.tj ҳастам 👋<br>
-            Бо кадом маҳсулот ёрдам карда метавонам?
+            Добро пожаловать! Я AI помощник Bozor.tj 👋<br>
+            Какой товар вас интересует?
           </div>
         </div>
         <div class="gen-ai-suggestions" id="gen-ai-suggestions">
-          <button type="button" class="gen-ai-chip" onclick="genAISend(this.textContent)">💰 2000 сомон дорам, чӣ харам?</button>
-          <button type="button" class="gen-ai-chip" onclick="genAISend(this.textContent)">📱 Телефони хуб тавсия деҳ</button>
-          <button type="button" class="gen-ai-chip" onclick="genAISend(this.textContent)">🔍 Арзонтарин маҳсулот?</button>
+          <button type="button" class="gen-ai-chip" onclick="genAISend(this.textContent)">💰 У меня есть 2000 сомони, что купить?</button>
+          <button type="button" class="gen-ai-chip" onclick="genAISend(this.textContent)">📱 Порекомендуй хороший телефон</button>
+          <button type="button" class="gen-ai-chip" onclick="genAISend(this.textContent)">🔍 Самый дешёвый товар?</button>
         </div>
       </div>
       <div class="gen-ai-panel__foot">
-        <input id="gen-ai-input" class="gen-ai-panel__input" type="text" placeholder="Саволи худро нависед..."
+        <input id="gen-ai-input" class="gen-ai-panel__input" type="text" placeholder="Задайте свой вопрос..."
           autocomplete="off"
           onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();genAISend()}">
-        <button type="button" class="gen-ai-panel__send" onclick="genAISend()" aria-label="Фиристодан">➤</button>
+        <button type="button" class="gen-ai-panel__send" onclick="genAISend()" aria-label="Отправить">➤</button>
       </div>
     </div>
     <div class="gen-ai-launcher__stack">
-      <p class="gen-ai-launcher__hint"><span class="gen-ai-launcher__wave" aria-hidden="true">👋</span> Мо ин ҷо ҳастем!</p>
+      <p class="gen-ai-launcher__hint"><span class="gen-ai-launcher__wave" aria-hidden="true">👋</span> Мы здесь, чтобы помочь!</p>
       <button type="button" id="gen-ai-btn" class="gen-ai-fab" onclick="toggleGenAI()"
-        title="AI Ёрдамчи" aria-label="Кушодани AI ёрдамчи" aria-expanded="false" aria-controls="gen-ai-panel">
+        title="AI Помощник" aria-label="Открыть AI помощника" aria-expanded="false" aria-controls="gen-ai-panel">
         <span class="gen-ai-fab__icon" aria-hidden="true">💬</span>
         <span class="gen-ai-fab__pulse" aria-hidden="true"></span>
       </button>

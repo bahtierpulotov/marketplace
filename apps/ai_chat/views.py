@@ -38,13 +38,13 @@ def ai_chat(request, product_id):
         try:
             data = json.loads(request.body)
         except json.JSONDecodeError:
-            return JsonResponse({'error': 'Invalid JSON'}, status=400)
+            return JsonResponse({'error': 'Некорректный формат JSON'}, status=400)
 
         user_message = data.get('message', '').strip()
         if not user_message:
-            return JsonResponse({'error': 'Message cannot be empty'}, status=400)
+            return JsonResponse({'error': 'Сообщение не может быть пустым'}, status=400)
         if len(user_message) > 2000:
-            return JsonResponse({'error': 'Message too long (max 2000 chars)'}, status=400)
+            return JsonResponse({'error': 'Сообщение слишком длинное (максимум 2000 символов)'}, status=400)
 
         # Load history (last 20 messages for context window efficiency)
         history = list(
@@ -83,7 +83,7 @@ def ai_chat(request, product_id):
             },
         })
 
-    return JsonResponse({'error': 'Method not allowed'}, status=405)
+    return JsonResponse({'error': 'Метод не разрешен'}, status=405)
 
 
 @csrf_exempt
@@ -91,15 +91,15 @@ def ai_chat(request, product_id):
 def delete_chat(request, product_id):
     """DELETE: Clear chat history for this product."""
     if request.method != 'DELETE':
-        return JsonResponse({'error': 'Method not allowed'}, status=405)
+        return JsonResponse({'error': 'Метод не разрешен'}, status=405)
 
     product = get_object_or_404(Product, id=product_id)
     try:
         session = ChatSession.objects.get(user=request.user_jwt, product=product)
         session.messages.all().delete()
-        return JsonResponse({'message': 'Chat history cleared'})
+        return JsonResponse({'message': 'История чата удалена'})
     except ChatSession.DoesNotExist:
-        return JsonResponse({'message': 'No chat history found'})
+        return JsonResponse({'message': 'История чата не найдена'})
 
 
 # ─── DIRECT CHAT (buyer ↔ seller) ─────────────────────────────────────────────
@@ -122,13 +122,13 @@ def direct_chat(request, product_id):
         try:
             post_data = json.loads(request.body or '{}')
         except json.JSONDecodeError:
-            return JsonResponse({'error': 'Invalid JSON'}, status=400)
+            return JsonResponse({'error': 'Некорректный формат JSON'}, status=400)
 
     buyer_ref = _buyer_query_param(request, post_data)
 
     if owner_id == uid:
         if not buyer_ref:
-            return JsonResponse({'error': 'buyer_required'}, status=400)
+            return JsonResponse({'error': 'Требуется указать ID покупателя'}, status=400)
         chat = get_object_or_404(
             DirectChat.objects.select_related('buyer', 'product'),
             product_id=product_id,
@@ -137,7 +137,7 @@ def direct_chat(request, product_id):
         other_user = chat.buyer
     else:
         if buyer_ref and str(buyer_ref) != uid:
-            return JsonResponse({'error': 'Forbidden'}, status=403)
+            return JsonResponse({'error': 'Доступ запрещен'}, status=403)
         chat, _ = DirectChat.objects.get_or_create(product=product, buyer=user)
         other_user = product.owner
 
@@ -174,9 +174,9 @@ def direct_chat(request, product_id):
     if request.method == 'POST':
         content = post_data.get('content', '').strip()
         if not content:
-            return JsonResponse({'error': 'Empty message'}, status=400)
+            return JsonResponse({'error': 'Сообщение не может быть пустым'}, status=400)
         if len(content) > 8000:
-            return JsonResponse({'error': 'Message too long'}, status=400)
+            return JsonResponse({'error': 'Сообщение слишком длинное'}, status=400)
         msg = DirectMessage.objects.create(chat=chat, sender=user, content=content)
         chat.save()
         return JsonResponse({
@@ -189,7 +189,7 @@ def direct_chat(request, product_id):
             'is_mine': True,
         }, status=201)
 
-    return JsonResponse({'error': 'Method not allowed'}, status=405)
+    return JsonResponse({'error': 'Метод не разрешен'}, status=405)
 
 
 @require_auth
